@@ -139,6 +139,21 @@ public:
 #pragma endregion
 
 
+#pragma region MarchingCubesEffect
+class MarchingCubesEffect : public Effect
+{
+public:
+	MarchingCubesEffect(ID3D11Device* device, const std::wstring& filename);
+	~MarchingCubesEffect();
+
+	ID3DX11EffectTechnique* Test;
+
+	void SetNoiseTex(ID3D11ShaderResourceView* tex) { noiseTex->SetResource(tex); }
+
+	ID3DX11EffectShaderResourceVariable* noiseTex;
+};
+#pragma endregion
+
 #pragma region Effects
 class Effects
 {
@@ -149,6 +164,7 @@ public:
 	static BasicEffect* BasicFX;
 	static TreeSpriteEffect* TreeSpriteFX;
 	static BuildDensityEffect* BuildDensityFX;
+	static MarchingCubesEffect* MarchingCubesFX;
 };
 #pragma endregion
 

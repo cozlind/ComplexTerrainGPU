@@ -107,18 +107,6 @@ BuildDensityEffect::BuildDensityEffect(ID3D11Device* device, const std::wstring&
 {
 	Test = mFX->GetTechniqueByIndex(0);
 	noiseTex = mFX->GetVariableByName("noiseTex")->AsShaderResource();
-	//Light3Tech = mFX->GetTechniqueByName("Light3");
-	//Light3TexAlphaClipTech = mFX->GetTechniqueByName("Light3TexAlphaClip");
-	//Light3TexAlphaClipFogTech = mFX->GetTechniqueByName("Light3TexAlphaClipFog");
-
-	//ViewProj = mFX->GetVariableByName("gViewProj")->AsMatrix();
-	//EyePosW = mFX->GetVariableByName("gEyePosW")->AsVector();
-	//FogColor = mFX->GetVariableByName("gFogColor")->AsVector();
-	//FogStart = mFX->GetVariableByName("gFogStart")->AsScalar();
-	//FogRange = mFX->GetVariableByName("gFogRange")->AsScalar();
-	//DirLights = mFX->GetVariableByName("gDirLights");
-	//Mat = mFX->GetVariableByName("gMaterial");
-	//TreeTextureMapArray = mFX->GetVariableByName("gTreeMapArray")->AsShaderResource();
 }
 
 BuildDensityEffect::~BuildDensityEffect()
@@ -127,17 +115,32 @@ BuildDensityEffect::~BuildDensityEffect()
 #pragma endregion
 
 
+#pragma region MarchingCubesEffect
+MarchingCubesEffect::MarchingCubesEffect(ID3D11Device* device, const std::wstring& filename)
+	: Effect(device, filename)
+{
+	Test = mFX->GetTechniqueByIndex(0);
+	noiseTex = mFX->GetVariableByName("noiseTex")->AsShaderResource();
+}
+
+MarchingCubesEffect::~MarchingCubesEffect()
+{
+}
+#pragma endregion
+
 #pragma region Effects
 
 BasicEffect*      Effects::BasicFX      = 0;
 TreeSpriteEffect* Effects::TreeSpriteFX = 0;
 BuildDensityEffect* Effects::BuildDensityFX = 0;
+MarchingCubesEffect* Effects::MarchingCubesFX = 0;
 
 void Effects::InitAll(ID3D11Device* device)
 {
 	BasicFX = new BasicEffect(device, L"FX/Basic.fxo");
 	TreeSpriteFX = new TreeSpriteEffect(device, L"FX/TreeSprite.fxo");
 	BuildDensityFX = new BuildDensityEffect(device, L"FX/BuildDensity.fxo");
+	MarchingCubesFX = new MarchingCubesEffect(device, L"FX/marchingCubes.fxo");
 
 }
 
