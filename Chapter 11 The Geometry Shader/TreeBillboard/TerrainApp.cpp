@@ -29,7 +29,7 @@
 
 const int cornerWidth = 33;
 const int cornerDepth = 33;
-const int cornerHeight = 4;
+const int cornerHeight = 33;
 const int voxelWidth = cornerWidth - 1;
 const int voxelDepth = cornerDepth - 1;
 const int voxelHeight = cornerHeight - 1;
@@ -408,6 +408,7 @@ void TerrainApp::DrawScene()
 	Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
 	Effects::MarchingCubesFX->SetWorldViewProj(worldViewProj);
 	Effects::MarchingCubesFX->SetTexTransform(XMLoadFloat4x4(&mTerrainTexTransform));
+	Effects::MarchingCubesFX->SetCornerHeight(cornerHeight);
 	Effects::MarchingCubesFX->SetNoiseTex(mDensitySRV);
 	Effects::MarchingCubesFX->MarchingCubes->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
 
@@ -935,20 +936,20 @@ void TerrainApp::HandleImGui() {
 	// 1. Show a simple window
 	// Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
 	{
-		for (int z = 0; z < 3; z++)
-		{
-			for (int y = 0; y < 2; y++)
-			{
-				for (int x = 0; x < 2; x++)
-				{
-					//ImGui::Text(std::to_string(myNoise.GetNoise(x, y, z)).c_str());
+		//for (int z = 0; z < 3; z++)
+		//{
+		//	for (int y = 0; y < 2; y++)
+		//	{
+		//		for (int x = 0; x < 2; x++)
+		//		{
+		//			//ImGui::Text(std::to_string(myNoise.GetNoise(x, y, z)).c_str());
 
-					ImGui::Text(std::to_string(noiseMap[z*cornerDepth*cornerWidth + y * cornerWidth + x]).c_str());
+		//			ImGui::Text(std::to_string(noiseMap[z*cornerDepth*cornerWidth + y * cornerWidth + x]).c_str());
 
-				}
-			}
-			ImGui::Text("\n");
-		}
+		//		}
+		//	}
+		//	ImGui::Text("\n");
+		//}
 
 		/*static float f = 0.0f;
 		for (int i = 0; i < 12; i++) {

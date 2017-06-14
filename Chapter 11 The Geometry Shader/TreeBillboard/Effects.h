@@ -150,6 +150,7 @@ public:
 	void SetWorld(CXMMATRIX M) { World->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetWorldInvTranspose(CXMMATRIX M) { WorldInvTranspose->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetTexTransform(CXMMATRIX M) { TexTransform->SetMatrix(reinterpret_cast<const float*>(&M)); }
+	void SetCornerHeight(UINT n) { MaxCornerHeight->SetInt(n); }
 	void SetNoiseTex(ID3D11ShaderResourceView* tex) { noiseTex->SetResource(tex); }
 
 	ID3DX11EffectTechnique* MarchingCubes;
@@ -158,6 +159,7 @@ public:
 	ID3DX11EffectMatrixVariable* World;
 	ID3DX11EffectMatrixVariable* WorldInvTranspose;
 	ID3DX11EffectMatrixVariable* TexTransform;
+	ID3DX11EffectScalarVariable* MaxCornerHeight;
 	ID3DX11EffectShaderResourceVariable* noiseTex;
 };
 #pragma endregion

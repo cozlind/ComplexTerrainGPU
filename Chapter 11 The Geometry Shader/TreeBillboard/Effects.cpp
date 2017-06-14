@@ -125,6 +125,7 @@ MarchingCubesEffect::MarchingCubesEffect(ID3D11Device* device, const std::wstrin
 	World = mFX->GetVariableByName("mWorld")->AsMatrix();
 	WorldInvTranspose = mFX->GetVariableByName("mWorldInvTranspose")->AsMatrix();
 	TexTransform = mFX->GetVariableByName("mTexTransform")->AsMatrix();
+	MaxCornerHeight = mFX->GetVariableByName("mCornerHeight")->AsScalar();
 }
 
 MarchingCubesEffect::~MarchingCubesEffect()
