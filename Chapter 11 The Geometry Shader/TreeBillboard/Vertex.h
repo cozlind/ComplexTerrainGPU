@@ -15,19 +15,26 @@ namespace Vertex
 	// Basic 32-byte vertex structure.
 	struct Basic32
 	{
-		Basic32() : Pos(0.0f, 0.0f, 0.0f), Normal(0.0f, 0.0f, 0.0f), Tex(0.0f, 0.0f) {}
+		Basic32() : pos(0.0f, 0.0f, 0.0f), Normal(0.0f, 0.0f, 0.0f), uv(0.0f, 0.0f) {}
 		Basic32(const XMFLOAT3& p, const XMFLOAT3& n, const XMFLOAT2& uv)
-			: Pos(p), Normal(n), Tex(uv) {}
+			: pos(p), Normal(n), uv(uv) {}
 		Basic32(float px, float py, float pz, float nx, float ny, float nz, float u, float v)
-			: Pos(px, py, pz), Normal(nx, ny, nz), Tex(u,v) {}
-		XMFLOAT3 Pos;
+			: pos(px, py, pz), Normal(nx, ny, nz), uv(u,v) {}
+		XMFLOAT3 pos;
 		XMFLOAT3 Normal;
-		XMFLOAT2 Tex;
+		XMFLOAT2 uv;
 	};
 
 	struct DensityQuad
 	{
 		XMFLOAT3 Pos;
+	};
+	struct TerrainVertex {
+		TerrainVertex() :pos(0.0f, 0.0f, 0.0f), uv(0.0f, 0.0f){}	
+		TerrainVertex(const XMFLOAT3& p, const XMFLOAT2& t): pos(p),uv(t) {}
+		TerrainVertex(float px, float py, float pz,  float u, float v): pos(px, py, pz),uv(u, v) {}
+		XMFLOAT3 pos;
+		XMFLOAT2 uv;
 	};
 }
 
@@ -38,6 +45,7 @@ public:
 	static const D3D11_INPUT_ELEMENT_DESC Basic32[3];
 	static const D3D11_INPUT_ELEMENT_DESC TreePointSprite[2];
 	static const D3D11_INPUT_ELEMENT_DESC BuildDensity[1];
+	static const D3D11_INPUT_ELEMENT_DESC MarchingCubes[2];
 };
 
 class InputLayouts
@@ -48,6 +56,7 @@ public:
 
 	static ID3D11InputLayout* Basic32;
 	static ID3D11InputLayout* TreePointSprite;
+	static ID3D11InputLayout* MarchingCubes;
 };
 
 #endif // VERTEX_H

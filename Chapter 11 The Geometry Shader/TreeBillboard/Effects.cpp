@@ -119,8 +119,12 @@ BuildDensityEffect::~BuildDensityEffect()
 MarchingCubesEffect::MarchingCubesEffect(ID3D11Device* device, const std::wstring& filename)
 	: Effect(device, filename)
 {
-	Test = mFX->GetTechniqueByIndex(0);
-	noiseTex = mFX->GetVariableByName("noiseTex")->AsShaderResource();
+	MarchingCubes = mFX->GetTechniqueByName("MarchingCubes");
+	noiseTex = mFX->GetVariableByName("noiseTex")->AsShaderResource();	
+	WorldViewProj = mFX->GetVariableByName("mWVP")->AsMatrix();
+	World = mFX->GetVariableByName("mWorld")->AsMatrix();
+	WorldInvTranspose = mFX->GetVariableByName("mWorldInvTranspose")->AsMatrix();
+	TexTransform = mFX->GetVariableByName("mTexTransform")->AsMatrix();
 }
 
 MarchingCubesEffect::~MarchingCubesEffect()
@@ -140,7 +144,7 @@ void Effects::InitAll(ID3D11Device* device)
 	BasicFX = new BasicEffect(device, L"FX/Basic.fxo");
 	TreeSpriteFX = new TreeSpriteEffect(device, L"FX/TreeSprite.fxo");
 	BuildDensityFX = new BuildDensityEffect(device, L"FX/BuildDensity.fxo");
-	MarchingCubesFX = new MarchingCubesEffect(device, L"FX/marchingCubes.fxo");
+	MarchingCubesFX = new MarchingCubesEffect(device, L"FX/MarchingCubes.fxo");
 
 }
 
@@ -149,5 +153,6 @@ void Effects::DestroyAll()
 	SafeDelete(BasicFX);
 	SafeDelete(TreeSpriteFX);
 	SafeDelete(BuildDensityFX);
+	SafeDelete(MarchingCubesFX);
 }
 #pragma endregion

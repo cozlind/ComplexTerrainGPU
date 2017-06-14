@@ -1,17 +1,17 @@
-struct vsOutputGsInput {
+struct vsOutGsIn {
 	float4 position : SV_Position;
 	float3 uvw: TexCoord;
 	uint instanceID: SliceIndex;
 };
-struct psInput
+struct psIn
 {
 	float4 pos : SV_POSITION;
 	float3 uvw: TEXCOORD0;
 	uint instanceID : SV_RenderTargetArrayIndex; //This will write your vertex to a specific slice, which you can read in pixel shader too
 };
-vsOutputGsInput VS(uint vertexID : SV_VertexID, uint instanceID : SV_InstanceID)
+vsOutGsIn VS(uint vertexID : SV_VertexID, uint instanceID : SV_InstanceID)
 {
-	vsOutputGsInput result;
+	vsOutGsIn result;
 	//result.uv = float2((vertexID << 1) & 2, vertexID & 2)*float2(0.5f, 0.5f);//(0,0)(1,0)(0,1)(1,1)
 	result.uvw = vertexID % 4 == 0 ? float3(1, 0, instanceID) : float3(0, 0, instanceID);
 	result.uvw = vertexID % 4 == 1 ? float3(0, 0, instanceID) : result.uvw;
@@ -29,9 +29,9 @@ vsOutputGsInput VS(uint vertexID : SV_VertexID, uint instanceID : SV_InstanceID)
 
 
 [maxvertexcount(3)]
-void GS(triangle VS_OUTPUT input[3], inout TriangleStream<psInput> gsout)
+void GS(triangle vsOutGsIn input[3], inout TriangleStream<psIn> gsout)
 {
-	psInput output;
+	psIn output;
 	for (uint i = 0; i < 3; i++)
 	{
 		output.pos = input[i].position;
@@ -42,7 +42,7 @@ void GS(triangle VS_OUTPUT input[3], inout TriangleStream<psInput> gsout)
 	gsout.RestartStrip();
 }
 
-SamplerState LinearRepeat
+SamplerState Point
 {
 	Filter = MIN_MAG_MIP_POINT;
 	AddressU = Wrap;
@@ -50,9 +50,9 @@ SamplerState LinearRepeat
 	AddressW = Wrap;
 };
 Texture3D noiseTex;
-float4 PS(psInput input) : SV_Target
+float4 PS(psIn input) : SV_Target
 {
-	return noiseTex.SampleLevel(LinearRepeat, float3(input.uvw.xy, input.uvw.z/4.0f),0);
+	return noiseTex.SampleLevel(Point, float3(input.uvw.xy, input.uvw.z/4.0f),0);
 }
 technique11 Test1
 {

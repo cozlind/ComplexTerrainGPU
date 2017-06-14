@@ -3,7 +3,7 @@
 //
 // 2 local object(s)
 //
-SamplerState LinearRepeat
+SamplerState Point
 {
     Filter   = uint(MIN_MAG_MIP_POINT /* 0 */);
     AddressU = uint(WRAP /* 1 */);
@@ -44,7 +44,7 @@ fxgroup
                 // -------------------- ----- ------ -------- -------- ------- ------
                 // SV_Position              0   xyzw        0      POS   float   xyzw
                 // TexCoord                 0   xyz         1     NONE   float   xyz 
-                // SLICEINDEX               0   x           2     NONE    uint   x   
+                // SliceIndex               0   x           2     NONE    uint   x   
                 //
                 vs_5_0
                 dcl_globalFlags refactoringAllowed | skipOptimization
@@ -62,7 +62,7 @@ fxgroup
                 //   o1.x <- <VS return value>.uvw.x; o1.y <- <VS return value>.uvw.y; o1.z <- <VS return value>.uvw.z; 
                 //   o0.x <- <VS return value>.position.x; o0.y <- <VS return value>.position.y; o0.z <- <VS return value>.position.z; o0.w <- <VS return value>.position.w
                 //
-                #line 30 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
+                #line 16 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
                 mov r0.x, l(4)
                 udiv null, r0.x, v0.x, r0.x
                 mov r0.y, l(0)
@@ -131,7 +131,7 @@ fxgroup
                 movc r1.xyzw, r2.xxxx, r3.xyzw, r1.xyzw
                 mov r0.w, v1.x  // r0.w <- result.instanceID
                 
-                #line 41
+                #line 27
                 mov o0.xyzw, r1.xyzw
                 mov o1.xyz, r0.xyzx
                 mov o2.x, r0.w
@@ -151,7 +151,7 @@ fxgroup
                 // -------------------- ----- ------ -------- -------- ------- ------
                 // SV_Position              0   xyzw        0      POS   float   xyzw
                 // TexCoord                 0   xyz         1     NONE   float   xyz 
-                // SLICEINDEX               0   x           2     NONE    uint   x   
+                // SliceIndex               0   x           2     NONE    uint   x   
                 //
                 //
                 // Output signature:
@@ -188,7 +188,7 @@ fxgroup
                 //   v[2][1].x <- input[2].uvw.x; v[2][1].y <- input[2].uvw.y; v[2][1].z <- input[2].uvw.z; 
                 //   v[2][2].x <- input[2].instanceID
                 //
-                #line 49 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
+                #line 35 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
                 mov r0.x, l(0)  // r0.x <- i
                 mov r0.y, r0.x  // r0.y <- i
                 loop 
@@ -218,7 +218,7 @@ fxgroup
                 //
                 // Name                                 Type  Format         Dim Slot Elements
                 // ------------------------------ ---------- ------- ----------- ---- --------
-                // LinearRepeat                      sampler      NA          NA    0        1
+                // Point                             sampler      NA          NA    0        1
                 // noiseTex                          texture  float4          3d    0        1
                 //
                 //
@@ -252,7 +252,7 @@ fxgroup
                 //   v2.x <- input.instanceID; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 69 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
+                #line 55 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\buildDensity.fx"
                 div r0.z, v1.z, l(4.000000)
                 itof r0.w, l(0)
                 mov r0.xy, v1.xyxx

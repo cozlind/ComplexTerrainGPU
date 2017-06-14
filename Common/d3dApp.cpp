@@ -17,7 +17,7 @@ namespace
 LRESULT CALLBACK
 MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (ImGui_ImplDX11_WndProcHandler(hwnd, msg, wParam, lParam)) return true;
+	//if (ImGui_ImplDX11_WndProcHandler(hwnd, msg, wParam, lParam)) return true;
 	// Forward hwnd on because we can get messages (e.g., WM_CREATE)
 	// before CreateWindow returns, and thus before mhMainWnd is valid.
 	return gd3dApp->MsgProc(hwnd, msg, wParam, lParam);

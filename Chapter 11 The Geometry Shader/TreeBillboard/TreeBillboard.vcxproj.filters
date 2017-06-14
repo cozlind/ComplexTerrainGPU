@@ -156,7 +156,7 @@
     <CustomBuild Include="FX\buildDensity.fx">
       <Filter>FX</Filter>
     </CustomBuild>
-    <CustomBuild Include="marchingCubes.fx">
+    <CustomBuild Include="FX\marchingCubes.fx">
       <Filter>FX</Filter>
     </CustomBuild>
   </ItemGroup>

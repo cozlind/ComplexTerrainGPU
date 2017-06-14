@@ -27,9 +27,12 @@
 #include <string>
 #include "FastNoise.h"
 
-const int width = 64;
-const int height = 64;
-const int depth = 4;
+const int cornerWidth = 33;
+const int cornerDepth = 33;
+const int cornerHeight = 4;
+const int voxelWidth = cornerWidth - 1;
+const int voxelDepth = cornerDepth - 1;
+const int voxelHeight = cornerHeight - 1;
 
 
 enum RenderOptions
@@ -60,7 +63,8 @@ private:
 	void BuildLandGeometryBuffers();
 	void BuildWaveGeometryBuffers();
 	void BuildCrateGeometryBuffers();
-	void InitDensityFX();
+	void InitDensitySRV();
+	void BuildTerrainGeometryBuffers();
 	void DrawDensityFX(CXMMATRIX viewProj);
 	void HandleImGui();
 
@@ -74,7 +78,8 @@ private:
 	ID3D11Buffer* mBoxVB;
 	ID3D11Buffer* mBoxIB;
 
-	ID3D11Buffer* mTreeSpritesVB;
+	ID3D11Buffer* mTerrainVB;
+	ID3D11Buffer* mTerrainIB;
 
 	ID3D11ShaderResourceView* mGrassMapSRV;
 	ID3D11ShaderResourceView* mWavesMapSRV;
@@ -91,14 +96,18 @@ private:
 
 	XMFLOAT4X4 mGrassTexTransform;
 	XMFLOAT4X4 mWaterTexTransform;
+	XMFLOAT4X4 mTerrainTexTransform;
 	XMFLOAT4X4 mLandWorld;
 	XMFLOAT4X4 mWavesWorld;
 	XMFLOAT4X4 mBoxWorld;
+
+	XMFLOAT4X4 mTerrainWorld;
 
 	XMFLOAT4X4 mView;
 	XMFLOAT4X4 mProj;
 
 	UINT mLandIndexCount;
+	UINT mTerrainIndexCount;
 
 	static const UINT NoiseQuadPointCount = 28;
 
@@ -120,7 +129,7 @@ private:
 	ID3D11RenderTargetView* mDensityRTV;
 
 
-	float noiseMap[width * height * depth];
+	float noiseMap[cornerWidth * cornerDepth * cornerHeight];
 
 };
 
@@ -140,9 +149,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 }
 
 TerrainApp::TerrainApp(HINSTANCE hInstance)
-	: D3DApp(hInstance), mLandVB(0), mLandIB(0), mWavesVB(0), mWavesIB(0), mBoxVB(0), mBoxIB(0), mTreeSpritesVB(0),
+	: D3DApp(hInstance), mLandVB(0), mLandIB(0), mWavesVB(0), mWavesIB(0), mBoxVB(0), mBoxIB(0), mTerrainVB(0), mTerrainIB(0),
 	mGrassMapSRV(0), mWavesMapSRV(0), mBoxMapSRV(0), mAlphaToCoverageOn(true),
-	mWaterTexOffset(0.0f, 0.0f), mEyePosW(0.0f, 0.0f, 0.0f), mLandIndexCount(0), mRenderOptions(RenderOptions::TexturesAndFog),
+	mWaterTexOffset(0.0f, 0.0f), mEyePosW(0.0f, 0.0f, 0.0f), mLandIndexCount(0), mTerrainIndexCount(0), mRenderOptions(RenderOptions::TexturesAndFog),
 	mTheta(1.3f*MathHelper::Pi), mPhi(0.4f*MathHelper::Pi), mRadius(80.0f)
 {
 	mMainWndCaption = L"Terrain Demo";
@@ -153,9 +162,11 @@ TerrainApp::TerrainApp(HINSTANCE hInstance)
 
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&mLandWorld, I);
+	XMStoreFloat4x4(&mTerrainWorld, I);
 	XMStoreFloat4x4(&mWavesWorld, I);
 	XMStoreFloat4x4(&mView, I);
 	XMStoreFloat4x4(&mProj, I);
+	XMStoreFloat4x4(&mTerrainTexTransform, I);
 
 	XMMATRIX boxScale = XMMatrixScaling(15.0f, 15.0f, 15.0f);
 	XMMATRIX boxOffset = XMMatrixTranslation(8.0f, 5.0f, -15.0f);
@@ -205,7 +216,8 @@ TerrainApp::~TerrainApp()
 	ReleaseCOM(mWavesIB);
 	ReleaseCOM(mBoxVB);
 	ReleaseCOM(mBoxIB);
-	ReleaseCOM(mTreeSpritesVB);
+	ReleaseCOM(mTerrainVB);
+	ReleaseCOM(mTerrainIB);
 	ReleaseCOM(mGrassMapSRV);
 	ReleaseCOM(mWavesMapSRV);
 	ReleaseCOM(mBoxMapSRV);
@@ -247,10 +259,14 @@ bool TerrainApp::Init()
 		L"Textures/volTex.dds", &texResource, &mDensitySRV));
 	ReleaseCOM(texResource); // view saves reference
 
+
+	InitDensitySRV();
+
+
 	BuildLandGeometryBuffers();
 	BuildWaveGeometryBuffers();
 	BuildCrateGeometryBuffers();
-	InitDensityFX();
+	BuildTerrainGeometryBuffers();
 
 	return true;
 }
@@ -308,12 +324,12 @@ void TerrainApp::UpdateScene(float dt)
 	Vertex::Basic32* v = reinterpret_cast<Vertex::Basic32*>(mappedData.pData);
 	for (UINT i = 0; i < mWaves.VertexCount(); ++i)
 	{
-		v[i].Pos = mWaves[i];
-		v[i].Normal = mWaves.Normal(i);
+		v[i].pos = mWaves[i];
+		//v[i].Normal = mWaves.Normal(i);
 
 		// Derive tex-coords in [0,1] from position.
-		v[i].Tex.x = 0.5f + mWaves[i].x / mWaves.Width();
-		v[i].Tex.y = 0.5f - mWaves[i].z / mWaves.Depth();
+		v[i].uv.x = 0.5f + mWaves[i].x / mWaves.Width();
+		v[i].uv.y = 0.5f - mWaves[i].z / mWaves.Depth();
 	}
 
 	md3dImmediateContext->Unmap(mWavesVB, 0);
@@ -354,8 +370,12 @@ void TerrainApp::UpdateScene(float dt)
 
 void TerrainApp::DrawScene()
 {
+	//gui
 	HandleImGui();
-
+	//background
+	md3dImmediateContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&Colors::Black));
+	md3dImmediateContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	//basic reference
 	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	XMMATRIX view = XMLoadFloat4x4(&mView);
@@ -364,145 +384,167 @@ void TerrainApp::DrawScene()
 
 
 
+	md3dImmediateContext->IASetInputLayout(InputLayouts::MarchingCubes);
+	md3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	UINT stride = sizeof(Vertex::TerrainVertex);
+	UINT offset = 0;
 
-	md3dImmediateContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&Colors::Silver));
-	md3dImmediateContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	//begin to draw
+	D3DX11_TECHNIQUE_DESC techDesc;
+	Effects::MarchingCubesFX->MarchingCubes->GetDesc(&techDesc);
 
+	//
+	// Draw the hills.
+	//
+	md3dImmediateContext->IASetVertexBuffers(0, 1, &mTerrainVB, &stride, &offset);
+	md3dImmediateContext->IASetIndexBuffer(mTerrainIB, DXGI_FORMAT_R32_UINT, 0);
+
+	// Set per object constants.
+	XMMATRIX world = XMLoadFloat4x4(&mTerrainWorld);
+	XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
+	XMMATRIX worldViewProj = world*view*proj;
+
+	Effects::MarchingCubesFX->SetWorld(world);
+	Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
+	Effects::MarchingCubesFX->SetWorldViewProj(worldViewProj);
+	Effects::MarchingCubesFX->SetTexTransform(XMLoadFloat4x4(&mTerrainTexTransform));
+	Effects::MarchingCubesFX->SetNoiseTex(mDensitySRV);
+	Effects::MarchingCubesFX->MarchingCubes->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
+
+	md3dImmediateContext->DrawIndexedInstanced(mTerrainIndexCount, voxelHeight, 0, 0,0);
+
+	//md3dImmediateContext->OMSetBlendState(0, blendFactor, 0xffffffff);
 
 	//
 	// Draw the density texture3d
 	//
 
-	DrawDensityFX(viewProj);
-	//
-	// DrawTreeSprites() changes InputLayout and PrimitiveTopology, so change it based on 
-	// the geometry we draw next.
-	//
+	//DrawDensityFX(viewProj);
 
-	md3dImmediateContext->IASetInputLayout(InputLayouts::Basic32);
-	md3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	UINT stride = sizeof(Vertex::Basic32);
-	UINT offset = 0;
 
-	//
-	// Set per frame constants for the rest of the objects.
-	//
-	Effects::BasicFX->SetDirLights(mDirLights);
-	Effects::BasicFX->SetEyePosW(mEyePosW);
-	Effects::BasicFX->SetFogColor(Colors::Silver);
-	Effects::BasicFX->SetFogStart(15.0f);
-	Effects::BasicFX->SetFogRange(175.0f);
+#pragma region drawSinLand  
+	//md3dImmediateContext->IASetInputLayout(InputLayouts::Basic32);
+	//md3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//stride = sizeof(Vertex::Basic32);
+	//offset = 0;
 
-	//
-	// Figure out which technique to use.
-	//
-	ID3DX11EffectTechnique* boxTech;
-	ID3DX11EffectTechnique* landAndWavesTech;
+	////
+	//// Set per frame constants for the rest of the objects.
+	////
+	//Effects::BasicFX->SetDirLights(mDirLights);
+	//Effects::BasicFX->SetEyePosW(mEyePosW);
+	//Effects::BasicFX->SetFogColor(Colors::Silver);
+	//Effects::BasicFX->SetFogStart(15.0f);
+	//Effects::BasicFX->SetFogRange(175.0f);
 
-	switch (mRenderOptions)
-	{
-	case RenderOptions::Lighting:
-		boxTech = Effects::BasicFX->Light3Tech;
-		landAndWavesTech = Effects::BasicFX->Light3Tech;
-		break;
-	case RenderOptions::Textures:
-		boxTech = Effects::BasicFX->Light3TexAlphaClipTech;
-		landAndWavesTech = Effects::BasicFX->Light3TexTech;
-		break;
-	case RenderOptions::TexturesAndFog:
-		boxTech = Effects::BasicFX->Light3TexAlphaClipFogTech;
-		landAndWavesTech = Effects::BasicFX->Light3TexFogTech;
-		break;
-	}
+	////
+	//// Figure out which technique to use.
+	////
+	//ID3DX11EffectTechnique* boxTech;
+	//ID3DX11EffectTechnique* landAndWavesTech;
 
-	D3DX11_TECHNIQUE_DESC techDesc;
+	//switch (mRenderOptions)
+	//{
+	//case RenderOptions::Lighting:
+	//	boxTech = Effects::BasicFX->Light3Tech;
+	//	landAndWavesTech = Effects::BasicFX->Light3Tech;
+	//	break;
+	//case RenderOptions::Textures:
+	//	boxTech = Effects::BasicFX->Light3TexAlphaClipTech;
+	//	landAndWavesTech = Effects::BasicFX->Light3TexTech;
+	//	break;
+	//case RenderOptions::TexturesAndFog:
+	//	boxTech = Effects::BasicFX->Light3TexAlphaClipFogTech;
+	//	landAndWavesTech = Effects::BasicFX->Light3TexFogTech;
+	//	break;
+	//}
 
-	//
-	// Draw the box.
-	// 
 
-	boxTech->GetDesc(&techDesc);
-	for (UINT p = 0; p < techDesc.Passes; ++p)
-	{
-		md3dImmediateContext->IASetVertexBuffers(0, 1, &mBoxVB, &stride, &offset);
-		md3dImmediateContext->IASetIndexBuffer(mBoxIB, DXGI_FORMAT_R32_UINT, 0);
+	////
+	//// Draw the box.
+	//// 
 
-		// Set per object constants.
-		XMMATRIX world = XMLoadFloat4x4(&mBoxWorld);
-		XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
-		XMMATRIX worldViewProj = world*view*proj;
+	////boxTech->GetDesc(&techDesc);
+	/////*for (UINT p = 0; p < techDesc.Passes; ++p)
+	////{*/
+	////UINT p = 0;
+	////	md3dImmediateContext->IASetVertexBuffers(0, 1, &mBoxVB, &stride, &offset);
+	////	md3dImmediateContext->IASetIndexBuffer(mBoxIB, DXGI_FORMAT_R32_UINT, 0);
 
-		Effects::BasicFX->SetWorld(world);
-		Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
-		Effects::BasicFX->SetWorldViewProj(worldViewProj);
-		Effects::BasicFX->SetTexTransform(XMMatrixIdentity());
-		Effects::BasicFX->SetMaterial(mBoxMat);
-		Effects::BasicFX->SetDiffuseMap(mBoxMapSRV);
+	////	// Set per object constants.
+	////	XMMATRIX world = XMLoadFloat4x4(&mBoxWorld);
+	////	XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
+	////	XMMATRIX worldViewProj = world*view*proj;
 
-		//md3dImmediateContext->OMSetBlendState(RenderStates::AlphaToCoverageBS, blendFactor, 0xffffffff);
-		md3dImmediateContext->RSSetState(RenderStates::NoCullRS);
-		boxTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
-		md3dImmediateContext->DrawIndexed(36, 0, 0);
+	////	Effects::BasicFX->SetWorld(world);
+	////	Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
+	////	Effects::BasicFX->SetWorldViewProj(worldViewProj);
+	////	Effects::BasicFX->SetTexTransform(XMMatrixIdentity());
+	////	//Effects::BasicFX->SetMaterial(mBoxMat);
+	////	//Effects::BasicFX->SetDiffuseMap(mBoxMapSRV);
 
-		// Restore default render state.
-		md3dImmediateContext->RSSetState(0);
-	}
+	////	//md3dImmediateContext->OMSetBlendState(RenderStates::AlphaToCoverageBS, blendFactor, 0xffffffff);
+	////	md3dImmediateContext->RSSetState(RenderStates::NoCullRS);
+	////	boxTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
+	////	md3dImmediateContext->DrawIndexed(36, 0, 0);
 
-	//
-	// Draw the hills and water with texture and fog (no alpha clipping needed).
-	//
+	////	// Restore default render state.
+	////	md3dImmediateContext->RSSetState(0);
+	//////}
 
-	landAndWavesTech->GetDesc(&techDesc);
-	for (UINT p = 0; p < techDesc.Passes; ++p)
-	{
-		//
-		// Draw the hills.
-		//
-		md3dImmediateContext->IASetVertexBuffers(0, 1, &mLandVB, &stride, &offset);
-		md3dImmediateContext->IASetIndexBuffer(mLandIB, DXGI_FORMAT_R32_UINT, 0);
+	////
+	//// Draw the hills and water with texture and fog (no alpha clipping needed).
+	////
 
-		// Set per object constants.
-		XMMATRIX world = XMLoadFloat4x4(&mLandWorld);
-		XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
-		XMMATRIX worldViewProj = world*view*proj;
+	//landAndWavesTech->GetDesc(&techDesc);
+	//UINT p = 0;
+	//	
+	//	md3dImmediateContext->IASetVertexBuffers(0, 1, &mLandVB, &stride, &offset);
+	//	md3dImmediateContext->IASetIndexBuffer(mLandIB, DXGI_FORMAT_R32_UINT, 0);
 
-		Effects::BasicFX->SetWorld(world);
-		Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
-		Effects::BasicFX->SetWorldViewProj(worldViewProj);
-		Effects::BasicFX->SetTexTransform(XMLoadFloat4x4(&mGrassTexTransform));
-		Effects::BasicFX->SetMaterial(mLandMat);
-		Effects::BasicFX->SetDiffuseMap(mGrassMapSRV);
+	//	world = XMLoadFloat4x4(&mLandWorld);
+	//	worldInvTranspose = MathHelper::InverseTranspose(world);
+	//	worldViewProj = world*view*proj;
 
-		landAndWavesTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
-		md3dImmediateContext->DrawIndexed(mLandIndexCount, 0, 0);
+	//	Effects::BasicFX->SetWorld(world);
+	//	Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
+	//	Effects::BasicFX->SetWorldViewProj(worldViewProj);
+	//	Effects::BasicFX->SetTexTransform(XMLoadFloat4x4(&mGrassTexTransform));
+	//	Effects::BasicFX->SetMaterial(mLandMat);
+	//	Effects::BasicFX->SetDiffuseMap(mGrassMapSRV);
 
-		//
-		// Draw the waves.
-		//
-		md3dImmediateContext->IASetVertexBuffers(0, 1, &mWavesVB, &stride, &offset);
-		md3dImmediateContext->IASetIndexBuffer(mWavesIB, DXGI_FORMAT_R32_UINT, 0);
+	//	landAndWavesTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
+	//	md3dImmediateContext->DrawInstanced(mLandIndexCount, 1,0, 0);
 
-		// Set per object constants.
-		world = XMLoadFloat4x4(&mWavesWorld);
-		worldInvTranspose = MathHelper::InverseTranspose(world);
-		worldViewProj = world*view*proj;
+	////}
+	//	//
+	//	// Draw the waves.
+	//	//
+	//	md3dImmediateContext->IASetVertexBuffers(0, 1, &mWavesVB, &stride, &offset);
+	//	md3dImmediateContext->IASetIndexBuffer(mWavesIB, DXGI_FORMAT_R32_UINT, 0);
 
-		Effects::BasicFX->SetWorld(world);
-		Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
-		Effects::BasicFX->SetWorldViewProj(worldViewProj);
-		Effects::BasicFX->SetTexTransform(XMLoadFloat4x4(&mWaterTexTransform));
-		Effects::BasicFX->SetMaterial(mWavesMat);
-		Effects::BasicFX->SetDiffuseMap(mWavesMapSRV);
+	//	// Set per object constants.
+	//	world = XMLoadFloat4x4(&mWavesWorld);
+	//	worldInvTranspose = MathHelper::InverseTranspose(world);
+	//	worldViewProj = world*view*proj;
 
-		md3dImmediateContext->OMSetBlendState(RenderStates::TransparentBS, blendFactor, 0xffffffff);
-		landAndWavesTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
-		md3dImmediateContext->DrawIndexed(3 * mWaves.TriangleCount(), 0, 0);
+	//	Effects::BasicFX->SetWorld(world);
+	//	Effects::BasicFX->SetWorldInvTranspose(worldInvTranspose);
+	//	Effects::BasicFX->SetWorldViewProj(worldViewProj);
+	//	Effects::BasicFX->SetTexTransform(XMLoadFloat4x4(&mWaterTexTransform));
+	//	Effects::BasicFX->SetMaterial(mWavesMat);
+	//	Effects::BasicFX->SetDiffuseMap(mWavesMapSRV);
 
-		// Restore default blend state
-		md3dImmediateContext->OMSetBlendState(0, blendFactor, 0xffffffff);
-	}
+	//	md3dImmediateContext->OMSetBlendState(RenderStates::TransparentBS, blendFactor, 0xffffffff);
+	//	landAndWavesTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
+	//	md3dImmediateContext->DrawIndexed(3 * mWaves.TriangleCount(), 0, 0);
 
-	ImGui::Render();
+	//	// Restore default blend state
+	//md3dImmediateContext->OMSetBlendState(0, blendFactor, 0xffffffff);
+	//}
+
+#pragma endregion drawSinLand  
+ 	ImGui::Render();
 	HR(mSwapChain->Present(0, 0));
 }
 
@@ -590,11 +632,11 @@ void TerrainApp::BuildLandGeometryBuffers()
 	{
 		XMFLOAT3 p = grid.Vertices[i].Position;
 
-		p.y = GetHillHeight(p.x, p.z);
+		//p.y = GetHillHeight(p.x, p.z);
 
-		vertices[i].Pos = p;
-		vertices[i].Normal = GetHillNormal(p.x, p.z);
-		vertices[i].Tex = grid.Vertices[i].TexC;
+		vertices[i].pos = p;
+		//vertices[i].Normal = GetHillNormal(p.x, p.z);
+		vertices[i].uv = grid.Vertices[i].TexC;
 	}
 
 	D3D11_BUFFER_DESC vbd;
@@ -688,9 +730,9 @@ void TerrainApp::BuildCrateGeometryBuffers()
 
 	for (UINT i = 0; i < box.Vertices.size(); ++i)
 	{
-		vertices[i].Pos = box.Vertices[i].Position;
-		vertices[i].Normal = box.Vertices[i].Normal;
-		vertices[i].Tex = box.Vertices[i].TexC;
+		vertices[i].pos = box.Vertices[i].Position;
+		//vertices[i].Normal = box.Vertices[i].Normal;
+		vertices[i].uv = box.Vertices[i].TexC;
 	}
 
 	D3D11_BUFFER_DESC vbd;
@@ -718,21 +760,21 @@ void TerrainApp::BuildCrateGeometryBuffers()
 	HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mBoxIB));
 }
 
-void TerrainApp::InitDensityFX()
+void TerrainApp::InitDensitySRV()
 {
 
 	FastNoise myNoise; // Create a FastNoise object
 	myNoise.SetSeed(24);
 	myNoise.SetFrequency(0.2f);
 	myNoise.SetNoiseType(FastNoise::SimplexFractal); // Set the desired noise type
-	float noiseScale =1;
-	for (int z = 0; z < depth; z++)
+	float noiseScale = 1;
+	for (int y = 0; y < cornerHeight; y++)
 	{
-		for (int y = 0; y < height; y++)
+		for (int z = 0; z < cornerDepth; z++)
 		{
-			for (int x = 0; x < width; x++)
+			for (int x = 0; x < cornerWidth; x++)
 			{
-				noiseMap[z*height*width + y * width + x] = (myNoise.GetNoise(x*noiseScale, y*noiseScale, z*noiseScale)+1.0f )*0.5f;
+				noiseMap[y*cornerDepth*cornerWidth + z * cornerWidth + x] = (myNoise.GetNoise(x*noiseScale, z*noiseScale, y*noiseScale) + 1.0f)*0.5f;
 
 			}
 		}
@@ -740,21 +782,21 @@ void TerrainApp::InitDensityFX()
 
 	D3D11_SUBRESOURCE_DATA noiseData;
 	noiseData.pSysMem = noiseMap;
-	noiseData.SysMemPitch = sizeof(float)*width;
-	noiseData.SysMemSlicePitch = sizeof(float)*width*height;
+	noiseData.SysMemPitch = sizeof(float)*cornerWidth;
+	noiseData.SysMemSlicePitch = sizeof(float)*cornerWidth*cornerDepth;
 
 	//init texture3d and rendertargetview for render to texture
 	D3D11_TEXTURE3D_DESC textureDesc;
-	textureDesc.Width = width;
-	textureDesc.Height = height;
-	textureDesc.Depth = depth;
+	textureDesc.Width = cornerWidth;
+	textureDesc.Height = cornerDepth;
+	textureDesc.Depth = cornerHeight;
 	textureDesc.MipLevels = 1;
 	textureDesc.Format = DXGI_FORMAT_R32_FLOAT;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
 	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.MiscFlags = 0;
-	HR(md3dDevice->CreateTexture3D(&textureDesc,&noiseData, &mDensityTexture3d));
+	HR(md3dDevice->CreateTexture3D(&textureDesc, &noiseData, &mDensityTexture3d));
 
 	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
 	renderTargetViewDesc.Format = textureDesc.Format;
@@ -774,6 +816,48 @@ void TerrainApp::InitDensityFX()
 
 }
 
+void TerrainApp::BuildTerrainGeometryBuffers()
+{
+	GeometryGenerator::MeshData grid;
+
+	GeometryGenerator geoGen;
+
+	geoGen.CreateGrid(160.0f, 160.0f, voxelWidth, voxelDepth, grid);
+
+
+	mTerrainIndexCount = grid.Indices.size();
+	std::vector<Vertex::TerrainVertex> vertices(grid.Vertices.size());
+	for (UINT i = 0; i < grid.Vertices.size(); ++i)
+	{
+		vertices[i].pos = grid.Vertices[i].Position;
+		vertices[i].uv = grid.Vertices[i].TexC;
+	}
+
+	D3D11_BUFFER_DESC vbd;
+	vbd.Usage = D3D11_USAGE_IMMUTABLE;
+	vbd.ByteWidth = sizeof(Vertex::TerrainVertex) * grid.Vertices.size();
+	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vbd.CPUAccessFlags = 0;
+	vbd.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA vinitData;
+	vinitData.pSysMem = &vertices[0];
+	HR(md3dDevice->CreateBuffer(&vbd, &vinitData, &mTerrainVB));
+
+	//
+	// Pack the indices of all the meshes into one index buffer.
+	//
+
+	D3D11_BUFFER_DESC ibd;
+	ibd.Usage = D3D11_USAGE_IMMUTABLE;
+	ibd.ByteWidth = sizeof(UINT) *  grid.Indices.size();
+	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	ibd.CPUAccessFlags = 0;
+	ibd.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA iinitData;
+	iinitData.pSysMem = &grid.Indices[0];
+	HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mTerrainIB));
+
+}
 void TerrainApp::DrawDensityFX(CXMMATRIX viewProj)
 {
 	/*Effects::TreeSpriteFX->SetDirLights(mDirLights);
@@ -838,7 +922,7 @@ void TerrainApp::DrawDensityFX(CXMMATRIX viewProj)
 
 	ID3DX11EffectTechnique * pTech = NULL;
 	Effects::BuildDensityFX->Test->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
-	md3dImmediateContext->DrawInstanced(4, depth, 0, 0);
+	md3dImmediateContext->DrawInstanced(4, cornerHeight, 0, 0);
 
 
 }
@@ -859,7 +943,7 @@ void TerrainApp::HandleImGui() {
 				{
 					//ImGui::Text(std::to_string(myNoise.GetNoise(x, y, z)).c_str());
 
-					ImGui::Text(std::to_string(noiseMap[z*height*width + y * width + x]).c_str());
+					ImGui::Text(std::to_string(noiseMap[z*cornerDepth*cornerWidth + y * cornerWidth + x]).c_str());
 
 				}
 			}
