@@ -140,6 +140,7 @@
     <ClInclude Include="..\..\Common\FastNoise.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="FX\Table.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FX\LightHelper.fx">

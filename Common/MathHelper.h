@@ -61,7 +61,7 @@ public:
 		A.r[3] = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
 
 		DirectX::XMVECTOR det = DirectX::XMMatrixDeterminant(A);
-		return DirectX::XMMatrixTranspose(XMMatrixInverse(&det, A));
+		return DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, A));
 	}
 
 	static DirectX::XMVECTOR RandUnitVec3();

@@ -148,17 +148,21 @@ public:
 
 	void SetWorldViewProj(CXMMATRIX M) { WorldViewProj->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetWorld(CXMMATRIX M) { World->SetMatrix(reinterpret_cast<const float*>(&M)); }
+	void SetViewProj(CXMMATRIX M) { ViewProj->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetWorldInvTranspose(CXMMATRIX M) { WorldInvTranspose->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetTexTransform(CXMMATRIX M) { TexTransform->SetMatrix(reinterpret_cast<const float*>(&M)); }
 	void SetCornerHeight(UINT n) { MaxCornerHeight->SetInt(n); }
+	void SetVoxelSize(XMFLOAT3 n) { VoxelSize->SetFloatVector(reinterpret_cast<const float*>(&n)); }
 	void SetNoiseTex(ID3D11ShaderResourceView* tex) { noiseTex->SetResource(tex); }
 
 	ID3DX11EffectTechnique* MarchingCubes;
 
 	ID3DX11EffectMatrixVariable* WorldViewProj;
 	ID3DX11EffectMatrixVariable* World;
+	ID3DX11EffectMatrixVariable* ViewProj;
 	ID3DX11EffectMatrixVariable* WorldInvTranspose;
 	ID3DX11EffectMatrixVariable* TexTransform;
+	ID3DX11EffectVectorVariable* VoxelSize;
 	ID3DX11EffectScalarVariable* MaxCornerHeight;
 	ID3DX11EffectShaderResourceVariable* noiseTex;
 };

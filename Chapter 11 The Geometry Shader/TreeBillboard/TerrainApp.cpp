@@ -122,6 +122,8 @@ private:
 	float mTheta;
 	float mPhi;
 	float mRadius;
+	float mTargetX;
+	float mTargetY;
 
 	POINT mLastMousePos;
 
@@ -152,7 +154,7 @@ TerrainApp::TerrainApp(HINSTANCE hInstance)
 	: D3DApp(hInstance), mLandVB(0), mLandIB(0), mWavesVB(0), mWavesIB(0), mBoxVB(0), mBoxIB(0), mTerrainVB(0), mTerrainIB(0),
 	mGrassMapSRV(0), mWavesMapSRV(0), mBoxMapSRV(0), mAlphaToCoverageOn(true),
 	mWaterTexOffset(0.0f, 0.0f), mEyePosW(0.0f, 0.0f, 0.0f), mLandIndexCount(0), mTerrainIndexCount(0), mRenderOptions(RenderOptions::TexturesAndFog),
-	mTheta(1.3f*MathHelper::Pi), mPhi(0.4f*MathHelper::Pi), mRadius(80.0f)
+	mTheta(1.3f*MathHelper::Pi), mPhi(0.4f*MathHelper::Pi), mRadius(80.0f), mTargetX(0), mTargetY(0)
 {
 	mMainWndCaption = L"Terrain Demo";
 	mEnable4xMsaa = true;
@@ -289,8 +291,8 @@ void TerrainApp::UpdateScene(float dt)
 	mEyePosW = XMFLOAT3(x, y, z);
 
 	// Build the view matrix.
-	XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
-	XMVECTOR target = XMVectorZero();
+	XMVECTOR pos = XMVectorSet(x+ mTargetX*sinf(mTheta), y+ mTargetY, z-mTargetX*cosf(mTheta), 1.0f);
+	XMVECTOR target = XMVectorSet(+mTargetX*sinf(mTheta),+mTargetY, -mTargetX*cosf(mTheta), 1.0f);
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
 	XMMATRIX V = XMMatrixLookAtLH(pos, target, up);
@@ -380,9 +382,9 @@ void TerrainApp::DrawScene()
 
 	XMMATRIX view = XMLoadFloat4x4(&mView);
 	XMMATRIX proj = XMLoadFloat4x4(&mProj);
-	XMMATRIX viewProj = view*proj;
+	XMMATRIX viewProj = view*proj;  
 
-
+	md3dImmediateContext->RSSetState(RenderStates::NoCullRS);
 
 	md3dImmediateContext->IASetInputLayout(InputLayouts::MarchingCubes);
 	md3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -401,14 +403,17 @@ void TerrainApp::DrawScene()
 
 	// Set per object constants.
 	XMMATRIX world = XMLoadFloat4x4(&mTerrainWorld);
-	XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
+	//XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
 	XMMATRIX worldViewProj = world*view*proj;
+	XMFLOAT3 voxelSize = XMFLOAT3(160.0f / voxelWidth, 160.0f / voxelDepth, 160.0f / voxelHeight);
 
 	Effects::MarchingCubesFX->SetWorld(world);
-	Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
+	//Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
 	Effects::MarchingCubesFX->SetWorldViewProj(worldViewProj);
+	Effects::MarchingCubesFX->SetViewProj(viewProj);
 	Effects::MarchingCubesFX->SetTexTransform(XMLoadFloat4x4(&mTerrainTexTransform));
 	Effects::MarchingCubesFX->SetCornerHeight(cornerHeight);
+	Effects::MarchingCubesFX->SetVoxelSize(voxelSize);
 	Effects::MarchingCubesFX->SetNoiseTex(mDensitySRV);
 	Effects::MarchingCubesFX->MarchingCubes->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
 
@@ -588,6 +593,16 @@ void TerrainApp::OnMouseMove(WPARAM btnState, int x, int y)
 
 		// Restrict the radius.
 		mRadius = MathHelper::Clamp(mRadius, 20.0f, 500.0f);
+	}
+	else if ((btnState & MK_MBUTTON) != 0)
+	{
+		// Make each pixel correspond to 0.01 unit in the scene.
+		float dx = 0.1f*static_cast<float>(x - mLastMousePos.x);
+		float dy = 0.1f*static_cast<float>(y - mLastMousePos.y);
+
+		// Update the camera radius based on input.
+		mTargetX += dx;
+		mTargetY += dy;
 	}
 
 	mLastMousePos.x = x;
@@ -775,8 +790,8 @@ void TerrainApp::InitDensitySRV()
 		{
 			for (int x = 0; x < cornerWidth; x++)
 			{
-				noiseMap[y*cornerDepth*cornerWidth + z * cornerWidth + x] = (myNoise.GetNoise(x*noiseScale, z*noiseScale, y*noiseScale) + 1.0f)*0.5f;
-
+				//noiseMap[y*cornerDepth*cornerWidth + z * cornerWidth + x] = (myNoise.GetNoise(x*noiseScale, z*noiseScale, y*noiseScale) + 1.0f)*0.5f;  //0~1
+				noiseMap[y*cornerDepth*cornerWidth + z * cornerWidth + x] = myNoise.GetNoise(x*noiseScale, z*noiseScale, y*noiseScale);//-1~1
 			}
 		}
 	}
