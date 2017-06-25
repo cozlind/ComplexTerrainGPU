@@ -26,6 +26,7 @@
 #include "Waves.h"
 #include <string>
 #include "FastNoise.h"
+using namespace DirectX;
 
 const int cornerWidth = 33;
 const int cornerDepth = 33;
@@ -403,18 +404,22 @@ void TerrainApp::DrawScene()
 
 	// Set per object constants.
 	XMMATRIX world = XMLoadFloat4x4(&mTerrainWorld);
-	//XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
+	XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
 	XMMATRIX worldViewProj = world*view*proj;
-	XMFLOAT3 voxelSize = XMFLOAT3(160.0f / voxelWidth, 160.0f / voxelDepth, 160.0f / voxelHeight);
+	XMFLOAT3 voxelSize = XMFLOAT3(160.0f / (voxelWidth-1), 160.0f / voxelDepth, 160.0f / (voxelHeight-1));
 
 	Effects::MarchingCubesFX->SetWorld(world);
-	//Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
+	Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
 	Effects::MarchingCubesFX->SetWorldViewProj(worldViewProj);
 	Effects::MarchingCubesFX->SetViewProj(viewProj);
 	Effects::MarchingCubesFX->SetTexTransform(XMLoadFloat4x4(&mTerrainTexTransform));
 	Effects::MarchingCubesFX->SetCornerHeight(cornerHeight);
 	Effects::MarchingCubesFX->SetVoxelSize(voxelSize);
 	Effects::MarchingCubesFX->SetNoiseTex(mDensitySRV);
+	Effects::MarchingCubesFX->SetDirLights(mDirLights);
+	Effects::MarchingCubesFX->SetEyePosW(mEyePosW);
+	Effects::MarchingCubesFX->SetMaterial(mLandMat);
+
 	Effects::MarchingCubesFX->MarchingCubes->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
 
 	md3dImmediateContext->DrawIndexedInstanced(mTerrainIndexCount, voxelHeight, 0, 0,0);

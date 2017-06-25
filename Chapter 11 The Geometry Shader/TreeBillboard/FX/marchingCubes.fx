@@ -1,17 +1,13 @@
 #include "Table.h"
-//cbuffer lut1{
-//	uint case_to_numpolys[256];
-//float4 cornerAmask0123[12];
-//float4 cornerAmask4567[12];
-//float4 cornerBmask0123[12];
-//float4 cornerBmask4567[12];
-//float3 vec_start[12];
-//float3 vec_dir[12];
-//};
-//cbuffer lut2{
-//	int4 g_triTable[1280];
-//}
+#include "LightHelper.fx"
+
 #define wsToUvw(ws) (float3(ws.x/160.0f+0.5f, ws.z/160.0f+0.5f,ws.y/160.0f))
+
+cbuffer cbPerFrame
+{
+	DirectionalLight gDirLights[3];
+	float3 gEyePosW;
+};
 cbuffer cbPerObject
 {
 	float4x4 mWorld;
@@ -21,6 +17,7 @@ cbuffer cbPerObject
 	float4x4 mTexTransform;
 	uint mCornerHeight;
 	float3 mVoxelSize;
+	Material gMaterial;
 };
 Texture3D noiseTex;
 SamplerState Point
@@ -45,9 +42,10 @@ struct vsOutGsIn {
 };
 struct psInGsOut
 {
+	float3 posW:POSITION1;
 	float4 posH : SV_POSITION;
 	float3 uvw: TEXCOORD;
-	//uint mcCase:TEXCOORD2;
+	float3 normal:NORMAL;
 	//uint instanceID : SV_RenderTargetArrayIndex;
 };
 vsOutGsIn VS(vsIn vin, uint instanceID:SV_InstanceID) {
@@ -57,7 +55,7 @@ vsOutGsIn VS(vsIn vin, uint instanceID:SV_InstanceID) {
 	vout.posH = mul(float4(vout.posW, 1.0f), mViewProj);
 	//float3 uvw = float3(mul(float4(vin.uv, instanceID / (float)(mCornerHeight-1), 1.0f), mTexTransform).xyz);
 	float3 uvw = wsToUvw(vout.posW);
-	float2 step = float2(mVoxelSize.x / 160.0f, 0);
+	float2 step = float2(1.0f / 33.0f, 0);
 	float4 f0123 = float4(noiseTex.SampleLevel(Point, uvw + step.yyy, 0).x,
 		noiseTex.SampleLevel(Point, uvw + step.yyx, 0).x,
 		noiseTex.SampleLevel(Point, uvw + step.xyx, 0).x,
@@ -74,11 +72,36 @@ vsOutGsIn VS(vsIn vin, uint instanceID:SV_InstanceID) {
 	vout.mcCase = mcCase;
 	return vout;
 }
-psInGsOut PlaceVertOnEdge(vsOutGsIn input, int x) {
+float3 ComputeNormal(float3 uvw) {
+	float4 step = float4(1.0f/33.0f, 1.0f / 33.0f, 1.0f / 33.0f, 0);
+	float3 gradient = float3(
+		noiseTex.SampleLevel(Point, uvw + step.xww, 0).x - noiseTex.SampleLevel(Point, uvw - step.xww, 0).x,
+		noiseTex.SampleLevel(Point, uvw + step.wwy, 0).x - noiseTex.SampleLevel(Point, uvw - step.wwy, 0).x,
+		noiseTex.SampleLevel(Point, uvw + step.wzw, 0).x - noiseTex.SampleLevel(Point, uvw - step.wzw, 0).x);
+	return normalize(-gradient);
+}
+psInGsOut PlaceVertOnEdge(vsOutGsIn input, int edgeNum) {
+
+		//// Along this cell edge, where does the density value hit zero?
+		//float str0 = dot(cornerAmask0123[edgeNum], input.field0123) +
+		//	dot(cornerAmask4567[edgeNum], input.field4567);
+		//float str1 = dot(cornerBmask0123[edgeNum], input.field0123) +
+		//	dot(cornerBmask4567[edgeNum], input.field4567);
+		//float t = saturate(str0 / (str0 - str1)); //0..1
+		//										  // use that to get wsCoordand uvwcoords
+		//float3 pos_within_cell = vec_start[edgeNum]+ t * vec_dir[edgeNum]; //[0..1]
+		//float3 wsCoord = input.wsCoord.xyz+ pos_within_cell.xyz* wsVoxelSize;
+		//float3 uvw = input.uvw + (pos_within_cell*inv_voxelDimMinusOne).xzy;
+
+		//output.wsCoord_Ambo.xyz = wsCoord;
+		//output.wsCoord_Ambo.w = grad_ambo_tex.SampleLevel(s, uvw, 0).w;
+		//output.wsNormal = ComputeNormal(tex, s, uvw);
+		//return output;
+
 	psInGsOut output;
 	float3 v = input.posW;
 	float3 step = float3(mVoxelSize.x, mVoxelSize.x / 2.0f, 0);
-	switch (EdgeConnection[x][0])
+	switch (EdgeConnection[edgeNum][0])
 	{
 		case 0:		v += step.zyz; break;
 		case 1:		v += step.yxz; break;
@@ -93,7 +116,9 @@ psInGsOut PlaceVertOnEdge(vsOutGsIn input, int x) {
 		case 10:		v += step.xxy; break;
 		case 11:		v += step.xzy; break;
 	}
+	output.posW = v;
 	output.uvw = wsToUvw(v);
+	output.normal = ComputeNormal(output.uvw);
 	output.posH = mul(float4(v,1.0f), mViewProj);
 	return output;
 }
@@ -112,10 +137,38 @@ void GS(point vsOutGsIn input[1], inout TriangleStream <psInGsOut> Stream)
 		Stream.RestartStrip();
 	}
 }
-float4 PS(psInGsOut pin) :SV_Target//, uint instanceID : SV_RenderTargetArrayIndex
+float4 PS(psInGsOut pin,uniform int gLightCount ) :SV_Target//, uint instanceID : SV_RenderTargetArrayIndex
 {
- 	float4 c=noiseTex.SampleLevel(Point,pin.uvw,0);
-	return (c + float4(1, 0, 0, 0))*0.5f;
+	float3 toEye = gEyePosW - pin.posW;
+	float distToEye = length(toEye);
+	toEye /= distToEye;
+
+	float4 texColor = float4(1, 1, 1, 1);// = noiseTex.SampleLevel(Point, pin.uvw, 0);
+	float4 litColor = texColor;
+	if (gLightCount > 0)
+	{
+		// Start with a sum of zero.
+		float4 ambient = float4(0.0f, 0.0f, 0.0f, 0.0f);
+		float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
+		float4 spec = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+		// Sum the light contribution from each light source.  
+		[unroll]
+		for (int i = 0; i < gLightCount; ++i)
+		{
+			float4 A, D, S;
+			ComputeDirectionalLight(gMaterial, gDirLights[i], pin.normal, toEye, A, D, S);
+
+			ambient += A;
+			diffuse += D;
+			spec += S;
+		}
+
+		// Modulate with late add.
+		litColor = texColor*(ambient + diffuse) + spec;
+	}
+
+	return (litColor + float4(1, 0, 0, 0))*0.5f;
 }
 technique11 MarchingCubes
 {
@@ -123,6 +176,6 @@ technique11 MarchingCubes
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetGeometryShader(CompileShader(gs_5_0, GS()));
-		SetPixelShader(CompileShader(ps_5_0, PS()));
+		SetPixelShader(CompileShader(ps_5_0, PS(3)));
 	}
 }

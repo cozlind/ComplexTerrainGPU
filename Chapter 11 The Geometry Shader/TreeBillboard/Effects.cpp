@@ -126,8 +126,11 @@ MarchingCubesEffect::MarchingCubesEffect(ID3D11Device* device, const std::wstrin
 	ViewProj = mFX->GetVariableByName("mViewProj")->AsMatrix();
 	WorldInvTranspose = mFX->GetVariableByName("mWorldInvTranspose")->AsMatrix();
 	VoxelSize = mFX->GetVariableByName("mVoxelSize")->AsVector();
+	EyePosW = mFX->GetVariableByName("gEyePosW")->AsVector();
 	TexTransform = mFX->GetVariableByName("mTexTransform")->AsMatrix();
 	MaxCornerHeight = mFX->GetVariableByName("mCornerHeight")->AsScalar();
+	DirLights = mFX->GetVariableByName("gDirLights");
+	Mat = mFX->GetVariableByName("gMaterial");
 }
 
 MarchingCubesEffect::~MarchingCubesEffect()
