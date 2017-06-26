@@ -73,7 +73,7 @@ vsOutGsIn VS(vsIn vin, uint instanceID:SV_InstanceID) {
 	return vout;
 }
 float3 ComputeNormal(float3 uvw) {
-	float4 step = float4(1.0f/33.0f, 1.0f / 33.0f, 1.0f / 33.0f, 0);
+	float4 step = float4(1.0f / 33.0f, 1.0f / 33.0f, 1.0f / 33.0f, 0);
 	float3 gradient = float3(
 		noiseTex.SampleLevel(Point, uvw + step.xww, 0).x - noiseTex.SampleLevel(Point, uvw - step.xww, 0).x,
 		noiseTex.SampleLevel(Point, uvw + step.wwy, 0).x - noiseTex.SampleLevel(Point, uvw - step.wwy, 0).x,
@@ -82,44 +82,46 @@ float3 ComputeNormal(float3 uvw) {
 }
 psInGsOut PlaceVertOnEdge(vsOutGsIn input, int edgeNum) {
 
-		//// Along this cell edge, where does the density value hit zero?
-		//float str0 = dot(cornerAmask0123[edgeNum], input.field0123) +
-		//	dot(cornerAmask4567[edgeNum], input.field4567);
-		//float str1 = dot(cornerBmask0123[edgeNum], input.field0123) +
-		//	dot(cornerBmask4567[edgeNum], input.field4567);
-		//float t = saturate(str0 / (str0 - str1)); //0..1
-		//										  // use that to get wsCoordand uvwcoords
-		//float3 pos_within_cell = vec_start[edgeNum]+ t * vec_dir[edgeNum]; //[0..1]
-		//float3 wsCoord = input.wsCoord.xyz+ pos_within_cell.xyz* wsVoxelSize;
-		//float3 uvw = input.uvw + (pos_within_cell*inv_voxelDimMinusOne).xzy;
+	//// Along this cell edge, where does the density value hit zero?
+	//float str0 = dot(cornerAmask0123[edgeNum], input.field0123) +
+	//	dot(cornerAmask4567[edgeNum], input.field4567);
+	//float str1 = dot(cornerBmask0123[edgeNum], input.field0123) +
+	//	dot(cornerBmask4567[edgeNum], input.field4567);
+	//float t = saturate(str0 / (str0 - str1)); //0..1
+	//										  // use that to get wsCoordand uvwcoords
 
-		//output.wsCoord_Ambo.xyz = wsCoord;
-		//output.wsCoord_Ambo.w = grad_ambo_tex.SampleLevel(s, uvw, 0).w;
-		//output.wsNormal = ComputeNormal(tex, s, uvw);
-		//return output;
+	float t = 0.5f;
+	float3 posWithinCell = EdgeStart[edgeNum]+ t * EdgeDir[edgeNum]; //[0..1]
+	float3 v = input.posW+ posWithinCell*mVoxelSize.x;
+	//float3 uvw = input.uvw + (pos_within_cell*inv_voxelDimMinusOne).xzy;
+
+	//output.wsCoord_Ambo.xyz = wsCoord;
+	//output.wsCoord_Ambo.w = grad_ambo_tex.SampleLevel(s, uvw, 0).w;
+	//output.wsNormal = ComputeNormal(tex, s, uvw);
+	//return output;
 
 	psInGsOut output;
-	float3 v = input.posW;
-	float3 step = float3(mVoxelSize.x, mVoxelSize.x / 2.0f, 0);
-	switch (EdgeConnection[edgeNum][0])
-	{
-		case 0:		v += step.zyz; break;
-		case 1:		v += step.yxz; break;
-		case 2:		v += step.xyz; break;
-		case 3:		v += step.yzz; break;
-		case 4:		v += step.zyx; break;
-		case 5:		v += step.yxx; break;
-		case 6:		v += step.xyx; break;
-		case 7:		v += step.yzx; break;
-		case 8:		v += step.zzy; break;
-		case 9:		v += step.zxy; break;
-		case 10:		v += step.xxy; break;
-		case 11:		v += step.xzy; break;
-	}
+	//float3 v = input.posW;
+	//float3 step = float3(mVoxelSize.x, mVoxelSize.x / 2.0f, 0);
+	//switch (EdgeConnection[edgeNum][0])
+	//{
+	//case 0:		v += step.zyz; break;
+	//case 1:		v += step.yxz; break;
+	//case 2:		v += step.xyz; break;
+	//case 3:		v += step.yzz; break;
+	//case 4:		v += step.zyx; break;
+	//case 5:		v += step.yxx; break;
+	//case 6:		v += step.xyx; break;
+	//case 7:		v += step.yzx; break;
+	//case 8:		v += step.zzy; break;
+	//case 9:		v += step.zxy; break;
+	//case 10:	v += step.xxy; break;
+	//case 11:	v += step.xzy; break;
+	//}
 	output.posW = v;
 	output.uvw = wsToUvw(v);
 	output.normal = ComputeNormal(output.uvw);
-	output.posH = mul(float4(v,1.0f), mViewProj);
+	output.posH = mul(float4(v, 1.0f), mViewProj);
 	return output;
 }
 [maxvertexcount(15)]
@@ -127,7 +129,7 @@ void GS(point vsOutGsIn input[1], inout TriangleStream <psInGsOut> Stream)
 {
 	psInGsOut output;
 	uint num_polys = case_to_numpolys[input[0].mcCase];
-	for (uint p = 0; p<num_polys; p++) {
+	for (uint p = 0; p < num_polys; p++) {
 		output = PlaceVertOnEdge(input[0], triTable[input[0].mcCase][p].x);
 		Stream.Append(output);
 		output = PlaceVertOnEdge(input[0], triTable[input[0].mcCase][p].y);
@@ -137,7 +139,7 @@ void GS(point vsOutGsIn input[1], inout TriangleStream <psInGsOut> Stream)
 		Stream.RestartStrip();
 	}
 }
-float4 PS(psInGsOut pin,uniform int gLightCount ) :SV_Target//, uint instanceID : SV_RenderTargetArrayIndex
+float4 PS(psInGsOut pin, uniform int gLightCount) :SV_Target//, uint instanceID : SV_RenderTargetArrayIndex
 {
 	float3 toEye = gEyePosW - pin.posW;
 	float distToEye = length(toEye);
@@ -167,8 +169,7 @@ float4 PS(psInGsOut pin,uniform int gLightCount ) :SV_Target//, uint instanceID 
 		// Modulate with late add.
 		litColor = texColor*(ambient + diffuse) + spec;
 	}
-
-	return (litColor + float4(1, 0, 0, 0))*0.5f;
+	return litColor+float4(0.1f,0.1f,0.1f,0.1f)*0.9f;
 }
 technique11 MarchingCubes
 {

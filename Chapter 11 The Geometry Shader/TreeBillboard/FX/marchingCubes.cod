@@ -7,8 +7,10 @@ cbuffer $Globals
 {
     int     case_to_numpolys[256] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 2, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 3, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 3, 2, 3, 3, 2, 3, 4, 4, 3, 3, 4, 4, 3, 4, 5, 5, 2, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 3, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 4, 2, 3, 3, 4, 3, 4, 2, 3, 3, 4, 4, 5, 4, 5, 3, 2, 3, 4, 4, 3, 4, 5, 3, 2, 4, 5, 5, 4, 5, 2, 4, 1, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 3, 2, 3, 3, 4, 3, 4, 4, 5, 3, 2, 4, 3, 4, 3, 5, 2, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 4, 3, 4, 4, 3, 4, 5, 5, 4, 4, 3, 5, 2, 5, 4, 2, 1, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 2, 3, 3, 2, 3, 4, 4, 5, 4, 5, 5, 2, 4, 3, 5, 4, 3, 2, 4, 1, 3, 4, 4, 5, 4, 5, 3, 4, 4, 5, 5, 2, 3, 4, 2, 1, 2, 3, 3, 2, 3, 4, 2, 1, 3, 2, 4, 1, 2, 1, 1, 0 };// Offset:    0, size: 4084
     int3    triTable[1280] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 8, 3, 9, 8, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 8, 3, 1, 2, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 2, 10, 0, 2, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 8, 3, 2, 10, 8, 10, 9, 8, -1, -1, -1, -1, -1, -1, 3, 11, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 11, 2, 8, 11, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 9, 0, 2, 3, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 11, 2, 1, 9, 11, 9, 8, 11, -1, -1, -1, -1, -1, -1, 3, 10, 1, 11, 10, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 10, 1, 0, 8, 10, 8, 11, 10, -1, -1, -1, -1, -1, -1, 3, 9, 0, 3, 11, 9, 11, 10, 9, -1, -1, -1, -1, -1, -1, 9, 8, 10, 10, 8, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 3, 0, 7, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 9, 8, 4, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 1, 9, 4, 7, 1, 7, 3, 1, -1, -1, -1, -1, -1, -1, 1, 2, 10, 8, 4, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 4, 7, 3, 0, 4, 1, 2, 10, -1, -1, -1, -1, -1, -1, 9, 2, 10, 9, 0, 2, 8, 4, 7, -1, -1, -1, -1, -1, -1, 2, 10, 9, 2, 9, 7, 2, 7, 3, 7, 9, 4, -1, -1, -1, 8, 4, 7, 3, 11, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, 4, 7, 11, 2, 4, 2, 0, 4, -1, -1, -1, -1, -1, -1, 9, 0, 1, 8, 4, 7, 2, 3, 11, -1, -1, -1, -1, -1, -1, 4, 7, 11, 9, 4, 11, 9, 11, 2, 9, 2, 1, -1, -1, -1, 3, 10, 1, 3, 11, 10, 7, 8, 4, -1, -1, -1, -1, -1, -1, 1, 11, 10, 1, 4, 11, 1, 0, 4, 7, 11, 4, -1, -1, -1, 4, 7, 8, 9, 0, 11, 9, 11, 10, 11, 0, 3, -1, -1, -1, 4, 7, 11, 4, 11, 9, 9, 11, 10, -1, -1, -1, -1, -1, -1, 9, 5, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 5, 4, 0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 5, 4, 1, 5, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, 5, 4, 8, 3, 5, 3, 1, 5, -1, -1, -1, -1, -1, -1, 1, 2, 10, 9, 5, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 0, 8, 1, 2, 10, 4, 9, 5, -1, -1, -1, -1, -1, -1, 5, 2, 10, 5, 4, 2, 4, 0, 2, -1, -1, -1, -1, -1, -1, 2, 10, 5, 3, 2, 5, 3, 5, 4, 3, 4, 8, -1, -1, -1, 9, 5, 4, 2, 3, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 11, 2, 0, 8, 11, 4, 9, 5, -1, -1, -1, -1, -1, -1, 0, 5, 4, 0, 1, 5, 2, 3, 11, -1, -1, -1, -1, -1, -1, 2, 1, 5, 2, 5, 8, 2, 8, 11, 4, 8, 5, -1, -1, -1, 10, 3, 11, 10, 1, 3, 9, 5, 4, -1, -1, -1, -1, -1, -1, 4, 9, 5, 0, 8, 1, 8, 10, 1, 8, 11, 10, -1, -1, -1, 5, 4, 0, 5, 0, 11, 5, 11, 10, 11, 0, 3, -1, -1, -1, 5, 4, 8, 5, 8, 10, 10, 8, 11, -1, -1, -1, -1, -1, -1, 9, 7, 8, 5, 7, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 3, 0, 9, 5, 3, 5, 7, 3, -1, -1, -1, -1, -1, -1, 0, 7, 8, 0, 1, 7, 1, 5, 7, -1, -1, -1, -1, -1, -1, 1, 5, 3, 3, 5, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 7, 8, 9, 5, 7, 10, 1, 2, -1, -1, -1, -1, -1, -1, 10, 1, 2, 9, 5, 0, 5, 3, 0, 5, 7, 3, -1, -1, -1, 8, 0, 2, 8, 2, 5, 8, 5, 7, 10, 5, 2, -1, -1, -1, 2, 10, 5, 2, 5, 3, 3, 5, 7, -1, -1, -1, -1, -1, -1, 7, 9, 5, 7, 8, 9, 3, 11, 2, -1, -1, -1, -1, -1, -1, 9, 5, 7, 9, 7, 2, 9, 2, 0, 2, 7, 11, -1, -1, -1, 2, 3, 11, 0, 1, 8, 1, 7, 8, 1, 5, 7, -1, -1, -1, 11, 2, 1, 11, 1, 7, 7, 1, 5, -1, -1, -1, -1, -1, -1, 9, 5, 8, 8, 5, 7, 10, 1, 3, 10, 3, 11, -1, -1, -1, 5, 7, 0, 5, 0, 9, 7, 11, 0, 1, 0, 10, 11, 10, 0, 11, 10, 0, 11, 0, 3, 10, 5, 0, 8, 0, 7, 5, 7, 0, 11, 10, 5, 7, 11, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, 6, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 8, 3, 5, 10, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 0, 1, 5, 10, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 8, 3, 1, 9, 8, 5, 10, 6, -1, -1, -1, -1, -1, -1, 1, 6, 5, 2, 6, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 6, 5, 1, 2, 6, 3, 0, 8, -1, -1, -1, -1, -1, -1, 9, 6, 5, 9, 0, 6, 0, 2, 6, -1, -1, -1, -1, -1, -1, 5, 9, 8, 5, 8, 2, 5, 2, 6, 3, 2, 8, -1, -1, -1, 2, 3, 11, 10, 6, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, 0, 8, 11, 2, 0, 10, 6, 5, -1, -1, -1, -1, -1, -1, 0, 1, 9, 2, 3, 11, 5, 10, 6, -1, -1, -1, -1, -1, -1, 5, 10, 6, 1, 9, 2, 9, 11, 2, 9, 8, 11, -1, -1, -1, 6, 3, 11, 6, 5, 3, 5, 1, 3, -1, -1, -1, -1, -1, -1, 0, 8, 11, 0, 11, 5, 0, 5, 1, 5, 11, 6, -1, -1, -1, 3, 11, 6, 0, 3, 6, 0, 6, 5, 0, 5, 9, -1, -1, -1, 6, 5, 9, 6, 9, 11, 11, 9, 8, -1, -1, -1, -1, -1, -1, 5, 10, 6, 4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 3, 0, 4, 7, 3, 6, 5, 10, -1, -1, -1, -1, -1, -1, 1, 9, 0, 5, 10, 6, 8, 4, 7, -1, -1, -1, -1, -1, -1, 10, 6, 5, 1, 9, 7, 1, 7, 3, 7, 9, 4, -1, -1, -1, 6, 1, 2, 6, 5, 1, 4, 7, 8, -1, -1, -1, -1, -1, -1, 1, 2, 5, 5, 2, 6, 3, 0, 4, 3, 4, 7, -1, -1, -1, 8, 4, 7, 9, 0, 5, 0, 6, 5, 0, 2, 6, -1, -1, -1, 7, 3, 9, 7, 9, 4, 3, 2, 9, 5, 9, 6, 2, 6, 9, 3, 11, 2, 7, 8, 4, 10, 6, 5, -1, -1, -1, -1, -1, -1, 5, 10, 6, 4, 7, 2, 4, 2, 0, 2, 7, 11, -1, -1, -1, 0, 1, 9, 4, 7, 8, 2, 3, 11, 5, 10, 6, -1, -1, -1, 9, 2, 1, 9, 11, 2, 9, 4, 11, 7, 11, 4, 5, 10, 6, 8, 4, 7, 3, 11, 5, 3, 5, 1, 5, 11, 6, -1, -1, -1, 5, 1, 11, 5, 11, 6, 1, 0, 11, 7, 11, 4, 0, 4, 11, 0, 5, 9, 0, 6, 5, 0, 3, 6, 11, 6, 3, 8, 4, 7, 6, 5, 9, 6, 9, 11, 4, 7, 9, 7, 11, 9, -1, -1, -1, 10, 4, 9, 6, 4, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 10, 6, 4, 9, 10, 0, 8, 3, -1, -1, -1, -1, -1, -1, 10, 0, 1, 10, 6, 0, 6, 4, 0, -1, -1, -1, -1, -1, -1, 8, 3, 1, 8, 1, 6, 8, 6, 4, 6, 1, 10, -1, -1, -1, 1, 4, 9, 1, 2, 4, 2, 6, 4, -1, -1, -1, -1, -1, -1, 3, 0, 8, 1, 2, 9, 2, 4, 9, 2, 6, 4, -1, -1, -1, 0, 2, 4, 4, 2, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, 3, 2, 8, 2, 4, 4, 2, 6, -1, -1, -1, -1, -1, -1, 10, 4, 9, 10, 6, 4, 11, 2, 3, -1, -1, -1, -1, -1, -1, 0, 8, 2, 2, 8, 11, 4, 9, 10, 4, 10, 6, -1, -1, -1, 3, 11, 2, 0, 1, 6, 0, 6, 4, 6, 1, 10, -1, -1, -1, 6, 4, 1, 6, 1, 10, 4, 8, 1, 2, 1, 11, 8, 11, 1, 9, 6, 4, 9, 3, 6, 9, 1, 3, 11, 6, 3, -1, -1, -1, 8, 11, 1, 8, 1, 0, 11, 6, 1, 9, 1, 4, 6, 4, 1, 3, 11, 6, 3, 6, 0, 0, 6, 4, -1, -1, -1, -1, -1, -1, 6, 4, 8, 11, 6, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 7, 10, 6, 7, 8, 10, 8, 9, 10, -1, -1, -1, -1, -1, -1, 0, 7, 3, 0, 10, 7, 0, 9, 10, 6, 7, 10, -1, -1, -1, 10, 6, 7, 1, 10, 7, 1, 7, 8, 1, 8, 0, -1, -1, -1, 10, 6, 7, 10, 7, 1, 1, 7, 3, -1, -1, -1, -1, -1, -1, 1, 2, 6, 1, 6, 8, 1, 8, 9, 8, 6, 7, -1, -1, -1, 2, 6, 9, 2, 9, 1, 6, 7, 9, 0, 9, 3, 7, 3, 9, 7, 8, 0, 7, 0, 6, 6, 0, 2, -1, -1, -1, -1, -1, -1, 7, 3, 2, 6, 7, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 3, 11, 10, 6, 8, 10, 8, 9, 8, 6, 7, -1, -1, -1, 2, 0, 7, 2, 7, 11, 0, 9, 7, 6, 7, 10, 9, 10, 7, 1, 8, 0, 1, 7, 8, 1, 10, 7, 6, 7, 10, 2, 3, 11, 11, 2, 1, 11, 1, 7, 10, 6, 1, 6, 7, 1, -1, -1, -1, 8, 9, 6, 8, 6, 7, 9, 1, 6, 11, 6, 3, 1, 3, 6, 0, 9, 1, 11, 6, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 7, 8, 0, 7, 0, 6, 3, 11, 0, 11, 6, 0, -1, -1, -1, 7, 11, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 7, 6, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 0, 8, 11, 7, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 9, 11, 7, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, 1, 9, 8, 3, 1, 11, 7, 6, -1, -1, -1, -1, -1, -1, 10, 1, 2, 6, 11, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 10, 3, 0, 8, 6, 11, 7, -1, -1, -1, -1, -1, -1, 2, 9, 0, 2, 10, 9, 6, 11, 7, -1, -1, -1, -1, -1, -1, 6, 11, 7, 2, 10, 3, 10, 8, 3, 10, 9, 8, -1, -1, -1, 7, 2, 3, 6, 2, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 7, 0, 8, 7, 6, 0, 6, 2, 0, -1, -1, -1, -1, -1, -1, 2, 7, 6, 2, 3, 7, 0, 1, 9, -1, -1, -1, -1, -1, -1, 1, 6, 2, 1, 8, 6, 1, 9, 8, 8, 7, 6, -1, -1, -1, 10, 7, 6, 10, 1, 7, 1, 3, 7, -1, -1, -1, -1, -1, -1, 10, 7, 6, 1, 7, 10, 1, 8, 7, 1, 0, 8, -1, -1, -1, 0, 3, 7, 0, 7, 10, 0, 10, 9, 6, 10, 7, -1, -1, -1, 7, 6, 10, 7, 10, 8, 8, 10, 9, -1, -1, -1, -1, -1, -1, 6, 8, 4, 11, 8, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 6, 11, 3, 0, 6, 0, 4, 6, -1, -1, -1, -1, -1, -1, 8, 6, 11, 8, 4, 6, 9, 0, 1, -1, -1, -1, -1, -1, -1, 9, 4, 6, 9, 6, 3, 9, 3, 1, 11, 3, 6, -1, -1, -1, 6, 8, 4, 6, 11, 8, 2, 10, 1, -1, -1, -1, -1, -1, -1, 1, 2, 10, 3, 0, 11, 0, 6, 11, 0, 4, 6, -1, -1, -1, 4, 11, 8, 4, 6, 11, 0, 2, 9, 2, 10, 9, -1, -1, -1, 10, 9, 3, 10, 3, 2, 9, 4, 3, 11, 3, 6, 4, 6, 3, 8, 2, 3, 8, 4, 2, 4, 6, 2, -1, -1, -1, -1, -1, -1, 0, 4, 2, 4, 6, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 9, 0, 2, 3, 4, 2, 4, 6, 4, 3, 8, -1, -1, -1, 1, 9, 4, 1, 4, 2, 2, 4, 6, -1, -1, -1, -1, -1, -1, 8, 1, 3, 8, 6, 1, 8, 4, 6, 6, 10, 1, -1, -1, -1, 10, 1, 0, 10, 0, 6, 6, 0, 4, -1, -1, -1, -1, -1, -1, 4, 6, 3, 4, 3, 8, 6, 10, 3, 0, 3, 9, 10, 9, 3, 10, 9, 4, 6, 10, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 9, 5, 7, 6, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 8, 3, 4, 9, 5, 11, 7, 6, -1, -1, -1, -1, -1, -1, 5, 0, 1, 5, 4, 0, 7, 6, 11, -1, -1, -1, -1, -1, -1, 11, 7, 6, 8, 3, 4, 3, 5, 4, 3, 1, 5, -1, -1, -1, 9, 5, 4, 10, 1, 2, 7, 6, 11, -1, -1, -1, -1, -1, -1, 6, 11, 7, 1, 2, 10, 0, 8, 3, 4, 9, 5, -1, -1, -1, 7, 6, 11, 5, 4, 10, 4, 2, 10, 4, 0, 2, -1, -1, -1, 3, 4, 8, 3, 5, 4, 3, 2, 5, 10, 5, 2, 11, 7, 6, 7, 2, 3, 7, 6, 2, 5, 4, 9, -1, -1, -1, -1, -1, -1, 9, 5, 4, 0, 8, 6, 0, 6, 2, 6, 8, 7, -1, -1, -1, 3, 6, 2, 3, 7, 6, 1, 5, 0, 5, 4, 0, -1, -1, -1, 6, 2, 8, 6, 8, 7, 2, 1, 8, 4, 8, 5, 1, 5, 8, 9, 5, 4, 10, 1, 6, 1, 7, 6, 1, 3, 7, -1, -1, -1, 1, 6, 10, 1, 7, 6, 1, 0, 7, 8, 7, 0, 9, 5, 4, 4, 0, 10, 4, 10, 5, 0, 3, 10, 6, 10, 7, 3, 7, 10, 7, 6, 10, 7, 10, 8, 5, 4, 10, 4, 8, 10, -1, -1, -1, 6, 9, 5, 6, 11, 9, 11, 8, 9, -1, -1, -1, -1, -1, -1, 3, 6, 11, 0, 6, 3, 0, 5, 6, 0, 9, 5, -1, -1, -1, 0, 11, 8, 0, 5, 11, 0, 1, 5, 5, 6, 11, -1, -1, -1, 6, 11, 3, 6, 3, 5, 5, 3, 1, -1, -1, -1, -1, -1, -1, 1, 2, 10, 9, 5, 11, 9, 11, 8, 11, 5, 6, -1, -1, -1, 0, 11, 3, 0, 6, 11, 0, 9, 6, 5, 6, 9, 1, 2, 10, 11, 8, 5, 11, 5, 6, 8, 0, 5, 10, 5, 2, 0, 2, 5, 6, 11, 3, 6, 3, 5, 2, 10, 3, 10, 5, 3, -1, -1, -1, 5, 8, 9, 5, 2, 8, 5, 6, 2, 3, 8, 2, -1, -1, -1, 9, 5, 6, 9, 6, 0, 0, 6, 2, -1, -1, -1, -1, -1, -1, 1, 5, 8, 1, 8, 0, 5, 6, 8, 3, 8, 2, 6, 2, 8, 1, 5, 6, 2, 1, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 3, 6, 1, 6, 10, 3, 8, 6, 5, 6, 9, 8, 9, 6, 10, 1, 0, 10, 0, 6, 9, 5, 0, 5, 6, 0, -1, -1, -1, 0, 3, 8, 5, 6, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, 5, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, 5, 10, 7, 5, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, 5, 10, 11, 7, 5, 8, 3, 0, -1, -1, -1, -1, -1, -1, 5, 11, 7, 5, 10, 11, 1, 9, 0, -1, -1, -1, -1, -1, -1, 10, 7, 5, 10, 11, 7, 9, 8, 1, 8, 3, 1, -1, -1, -1, 11, 1, 2, 11, 7, 1, 7, 5, 1, -1, -1, -1, -1, -1, -1, 0, 8, 3, 1, 2, 7, 1, 7, 5, 7, 2, 11, -1, -1, -1, 9, 7, 5, 9, 2, 7, 9, 0, 2, 2, 11, 7, -1, -1, -1, 7, 5, 2, 7, 2, 11, 5, 9, 2, 3, 2, 8, 9, 8, 2, 2, 5, 10, 2, 3, 5, 3, 7, 5, -1, -1, -1, -1, -1, -1, 8, 2, 0, 8, 5, 2, 8, 7, 5, 10, 2, 5, -1, -1, -1, 9, 0, 1, 5, 10, 3, 5, 3, 7, 3, 10, 2, -1, -1, -1, 9, 8, 2, 9, 2, 1, 8, 7, 2, 10, 2, 5, 7, 5, 2, 1, 3, 5, 3, 7, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 8, 7, 0, 7, 1, 1, 7, 5, -1, -1, -1, -1, -1, -1, 9, 0, 3, 9, 3, 5, 5, 3, 7, -1, -1, -1, -1, -1, -1, 9, 8, 7, 5, 9, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, 5, 8, 4, 5, 10, 8, 10, 11, 8, -1, -1, -1, -1, -1, -1, 5, 0, 4, 5, 11, 0, 5, 10, 11, 11, 3, 0, -1, -1, -1, 0, 1, 9, 8, 4, 10, 8, 10, 11, 10, 4, 5, -1, -1, -1, 10, 11, 4, 10, 4, 5, 11, 3, 4, 9, 4, 1, 3, 1, 4, 2, 5, 1, 2, 8, 5, 2, 11, 8, 4, 5, 8, -1, -1, -1, 0, 4, 11, 0, 11, 3, 4, 5, 11, 2, 11, 1, 5, 1, 11, 0, 2, 5, 0, 5, 9, 2, 11, 5, 4, 5, 8, 11, 8, 5, 9, 4, 5, 2, 11, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 5, 10, 3, 5, 2, 3, 4, 5, 3, 8, 4, -1, -1, -1, 5, 10, 2, 5, 2, 4, 4, 2, 0, -1, -1, -1, -1, -1, -1, 3, 10, 2, 3, 5, 10, 3, 8, 5, 4, 5, 8, 0, 1, 9, 5, 10, 2, 5, 2, 4, 1, 9, 2, 9, 4, 2, -1, -1, -1, 8, 4, 5, 8, 5, 3, 3, 5, 1, -1, -1, -1, -1, -1, -1, 0, 4, 5, 1, 0, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, 4, 5, 8, 5, 3, 9, 0, 5, 0, 3, 5, -1, -1, -1, 9, 4, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 11, 7, 4, 9, 11, 9, 10, 11, -1, -1, -1, -1, -1, -1, 0, 8, 3, 4, 9, 7, 9, 11, 7, 9, 10, 11, -1, -1, -1, 1, 10, 11, 1, 11, 4, 1, 4, 0, 7, 4, 11, -1, -1, -1, 3, 1, 4, 3, 4, 8, 1, 10, 4, 7, 4, 11, 10, 11, 4, 4, 11, 7, 9, 11, 4, 9, 2, 11, 9, 1, 2, -1, -1, -1, 9, 7, 4, 9, 11, 7, 9, 1, 11, 2, 11, 1, 0, 8, 3, 11, 7, 4, 11, 4, 2, 2, 4, 0, -1, -1, -1, -1, -1, -1, 11, 7, 4, 11, 4, 2, 8, 3, 4, 3, 2, 4, -1, -1, -1, 2, 9, 10, 2, 7, 9, 2, 3, 7, 7, 4, 9, -1, -1, -1, 9, 10, 7, 9, 7, 4, 10, 2, 7, 8, 7, 0, 2, 0, 7, 3, 7, 10, 3, 10, 2, 7, 4, 10, 1, 10, 0, 4, 0, 10, 1, 10, 2, 8, 7, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 9, 1, 4, 1, 7, 7, 1, 3, -1, -1, -1, -1, -1, -1, 4, 9, 1, 4, 1, 7, 0, 8, 1, 8, 7, 1, -1, -1, -1, 4, 0, 3, 7, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 8, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 10, 8, 10, 11, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 0, 9, 3, 9, 11, 11, 9, 10, -1, -1, -1, -1, -1, -1, 0, 1, 10, 0, 10, 8, 8, 10, 11, -1, -1, -1, -1, -1, -1, 3, 1, 10, 11, 3, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 11, 1, 11, 9, 9, 11, 8, -1, -1, -1, -1, -1, -1, 3, 0, 9, 3, 9, 11, 1, 2, 9, 2, 11, 9, -1, -1, -1, 0, 2, 11, 8, 0, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 2, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 3, 8, 2, 8, 10, 10, 8, 9, -1, -1, -1, -1, -1, -1, 9, 10, 2, 0, 9, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 3, 8, 2, 8, 10, 0, 1, 8, 1, 10, 8, -1, -1, -1, 1, 10, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 3, 8, 9, 1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };// Offset: 4096, size: 20476
-    int     EdgeConnection[24] = { 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 };// Offset: 24576, size:  372
-    float   EdgeDirection[36] = { 0, 1, 0, 1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 1, 0, 1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1 };// Offset: 24960, size:  564
+    int3    EdgeStart[12] = { 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0 };// Offset: 24576, size:  188
+    int3    EdgeDir[12] = { 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1 };// Offset: 24768, size:  188
+    int     EdgeConnection[24] = { 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 };// Offset: 24960, size:  372
+    float   EdgeDirection[36] = { 0, 1, 0, 1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 1, 0, 1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1 };// Offset: 25344, size:  564
 }
 
 cbuffer cbPerFrame
@@ -1776,7 +1778,33 @@ fxgroup
                 //        0xffffffff 0xffffffff 0xffffffff 0x00000000 
                 //        0xffffffff 0xffffffff 0xffffffff 0x00000000 
                 //        0xffffffff 0xffffffff 0xffffffff 
-                //   int EdgeConnection[24];            // Offset: 24576 Size:   372
+                //   int3 EdgeStart[12];                // Offset: 24576 Size:   188
+                //      = 0x00000000 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000001 0x00000001 0x00000000 
+                //        0x00000001 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 
+                //   int3 EdgeDir[12];                  // Offset: 24768 Size:   188
+                //      = 0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000001 0x00000000 0x00000000 
+                //        0x00000001 0x00000000 0x00000000 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 0x00000000 
+                //        0x00000000 0x00000000 0x00000001 
+                //   int EdgeConnection[24];            // Offset: 24960 Size:   372 [unused]
                 //      = 0x00000000 0x00000000 0x00000000 0x00000000 
                 //        0x00000001 0x00000000 0x00000000 0x00000000 
                 //        0x00000001 0x00000000 0x00000000 0x00000000 
@@ -1801,7 +1829,7 @@ fxgroup
                 //        0x00000006 0x00000000 0x00000000 0x00000000 
                 //        0x00000003 0x00000000 0x00000000 0x00000000 
                 //        0x00000007 
-                //   float EdgeDirection[36];           // Offset: 24960 Size:   564 [unused]
+                //   float EdgeDirection[36];           // Offset: 25344 Size:   564 [unused]
                 //      = 0x00000000 0x00000000 0x00000000 0x00000000 
                 //        0x3f800000 0x00000000 0x00000000 0x00000000 
                 //        0x00000000 0x00000000 0x00000000 0x00000000 
@@ -1921,7 +1949,7 @@ fxgroup
                 //   v[0][2].x <- input[0].uvw.x; v[0][2].y <- input[0].uvw.y; v[0][2].z <- input[0].uvw.z; 
                 //   v[0][3].x <- input[0].mcCase
                 //
-                #line 129 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 131 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r0.x, v[0][3].x
                 mov r0.x, cb0[r0.x + 0].x  // r0.x <- num_polys
                 mov r0.y, l(0)  // r0.y <- p
@@ -1933,56 +1961,18 @@ fxgroup
                   mov r1.xyz, v[0][1].xyzx
                   imul null, r0.w, l(5), v[0][3].x
                   iadd r0.w, r0.z, r0.w
+                  mov r0.w, cb0[r0.w + 256].x
                 
-                #line 102
-                  mov r1.xyz, r1.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
-                  div r2.z, cb1[16].y, l(2.000000)  // r2.z <- step.y
-                  itof r2.y, l(0)  // r2.y <- step.z
-                  mov r2.x, cb1[16].y  // r2.x <- step.x
-                  imul null, r0.w, l(2), cb0[r0.w + 256].x
-                  mov r0.w, cb0[r0.w + 1536].x
-                  switch r0.w
-                    case l(0)
-                    add r1.xyz, r1.xyzx, r2.yzyy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(1)
-                    add r1.xyz, r1.xyzx, r2.zxyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(2)
-                    add r1.xyz, r1.xyzx, r2.xzyx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(3)
-                    add r1.xyz, r1.xyzx, r2.zyyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(4)
-                    add r1.xyz, r1.xyzx, r2.yzxy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(5)
-                    add r1.xyz, r1.xyzx, r2.zxxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(6)
-                    add r1.xyz, r1.xyzx, r2.xzxx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
+                #line 93
+                  mov r1.w, l(0.500000)  // r1.w <- t
+                  itof r2.xyz, cb0[r0.w + 1536].xyzx
+                  itof r3.xyz, cb0[r0.w + 1548].xyzx
+                  mul r3.xyz, r1.wwww, r3.xyzx
+                  add r2.xyz, r2.xyzx, r3.xyzx  // r2.x <- posWithinCell.x; r2.y <- posWithinCell.y; r2.z <- posWithinCell.z
+                  mul r2.xyz, r2.xyzx, cb1[16].yyyy
+                  add r1.xyz, r1.xyzx, r2.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
                 
-                #line 113
-                    case l(7)
-                    add r1.xyz, r1.xyzx, r2.zyxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(8)
-                    add r1.xyz, r1.xyzx, r2.yyzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(9)
-                    add r1.xyz, r1.xyzx, r2.yxzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(10)
-                    add r1.xyz, r1.xyzx, r2.xxzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(11)
-                    add r1.xyz, r1.xyzx, r2.xyzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    default 
-                    break 
-                  endswitch 
+                #line 121
                   mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
                   div r0.w, r1.x, l(160.000000)
                   add r2.x, r0.w, l(0.500000)  // r2.x <- output.uvw.x
@@ -2029,7 +2019,7 @@ fxgroup
                   rsq r0.w, r0.w
                   mul r3.xyz, r0.wwww, r3.xyzx  // r3.x <- <ComputeNormal return value>.x; r3.y <- <ComputeNormal return value>.y; r3.z <- <ComputeNormal return value>.z
                 
-                #line 121
+                #line 123
                   mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
                   mov r1.w, l(1.000000)
                   dp4 r4.x, r1.xyzw, cb1[8].xyzw  // r4.x <- output.posH.x
@@ -2041,7 +2031,7 @@ fxgroup
                   mov r2.xyz, r2.xyzx  // r2.x <- <PlaceVertOnEdge return value>.uvw.x; r2.y <- <PlaceVertOnEdge return value>.uvw.y; r2.z <- <PlaceVertOnEdge return value>.uvw.z
                   mov r3.xyz, r3.xyzx  // r3.x <- <PlaceVertOnEdge return value>.normal.x; r3.y <- <PlaceVertOnEdge return value>.normal.y; r3.z <- <PlaceVertOnEdge return value>.normal.z
                 
-                #line 131
+                #line 133
                   mov r4.xyzw, r4.xyzw  // r4.x <- output.posH.x; r4.y <- output.posH.y; r4.z <- output.posH.z; r4.w <- output.posH.w
                   mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
                   mov r2.xyz, r2.xyzx  // r2.x <- output.uvw.x; r2.y <- output.uvw.y; r2.z <- output.uvw.z
@@ -2055,56 +2045,18 @@ fxgroup
                   mov r1.xyz, v[0][1].xyzx
                   imul null, r0.w, l(5), v[0][3].x
                   iadd r0.w, r0.z, r0.w
+                  mov r0.w, cb0[r0.w + 256].y
                 
-                #line 102
-                  mov r1.xyz, r1.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
-                  div r2.z, cb1[16].y, l(2.000000)  // r2.z <- step.y
-                  itof r2.y, l(0)  // r2.y <- step.z
-                  mov r2.x, cb1[16].y  // r2.x <- step.x
-                  imul null, r0.w, l(2), cb0[r0.w + 256].y
-                  mov r0.w, cb0[r0.w + 1536].x
-                  switch r0.w
-                    case l(0)
-                    add r1.xyz, r1.xyzx, r2.yzyy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(1)
-                    add r1.xyz, r1.xyzx, r2.zxyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(2)
-                    add r1.xyz, r1.xyzx, r2.xzyx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(3)
-                    add r1.xyz, r1.xyzx, r2.zyyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(4)
-                    add r1.xyz, r1.xyzx, r2.yzxy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(5)
-                    add r1.xyz, r1.xyzx, r2.zxxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(6)
-                    add r1.xyz, r1.xyzx, r2.xzxx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
+                #line 93
+                  mov r1.w, l(0.500000)  // r1.w <- t
+                  itof r2.xyz, cb0[r0.w + 1536].xyzx
+                  itof r3.xyz, cb0[r0.w + 1548].xyzx
+                  mul r3.xyz, r1.wwww, r3.xyzx
+                  add r2.xyz, r2.xyzx, r3.xyzx  // r2.x <- posWithinCell.x; r2.y <- posWithinCell.y; r2.z <- posWithinCell.z
+                  mul r2.xyz, r2.xyzx, cb1[16].yyyy
+                  add r1.xyz, r1.xyzx, r2.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
                 
-                #line 113
-                    case l(7)
-                    add r1.xyz, r1.xyzx, r2.zyxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(8)
-                    add r1.xyz, r1.xyzx, r2.yyzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(9)
-                    add r1.xyz, r1.xyzx, r2.yxzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(10)
-                    add r1.xyz, r1.xyzx, r2.xxzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(11)
-                    add r1.xyz, r1.xyzx, r2.xyzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    default 
-                    break 
-                  endswitch 
+                #line 121
                   mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
                   div r0.w, r1.x, l(160.000000)
                   add r2.x, r0.w, l(0.500000)  // r2.x <- output.uvw.x
@@ -2115,7 +2067,7 @@ fxgroup
                   mov r2.xyz, r2.xyzx
                 
                 #line 76
-                  itof r3.w, l(0)  // r3.w <- step.w
+                  itof r3.w, l(0)
                   mov r3.xyz, l(0.030303,0.030303,0.030303,0)  // r3.x <- step.x; r3.y <- step.y; r3.z <- step.z
                   add r4.xyz, r2.xyzx, r3.xwwx
                   itof r0.w, l(0)
@@ -2151,129 +2103,7 @@ fxgroup
                   rsq r0.w, r0.w
                   mul r3.xyz, r0.wwww, r3.xyzx  // r3.x <- <ComputeNormal return value>.x; r3.y <- <ComputeNormal return value>.y; r3.z <- <ComputeNormal return value>.z
                 
-                #line 121
-                  mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
-                  mov r1.w, l(1.000000)
-                  dp4 r4.x, r1.xyzw, cb1[8].xyzw  // r4.x <- output.posH.x
-                  dp4 r4.y, r1.xyzw, cb1[9].xyzw  // r4.y <- output.posH.y
-                  dp4 r4.z, r1.xyzw, cb1[10].xyzw  // r4.z <- output.posH.z
-                  dp4 r4.w, r1.xyzw, cb1[11].xyzw
-                  mov r4.xyzw, r4.xyzw  // r4.x <- <PlaceVertOnEdge return value>.posH.x; r4.y <- <PlaceVertOnEdge return value>.posH.y; r4.z <- <PlaceVertOnEdge return value>.posH.z
-                  mov r1.xyz, r1.xyzx  // r1.x <- <PlaceVertOnEdge return value>.posW.x; r1.y <- <PlaceVertOnEdge return value>.posW.y; r1.z <- <PlaceVertOnEdge return value>.posW.z
-                  mov r2.xyz, r2.xyzx  // r2.x <- <PlaceVertOnEdge return value>.uvw.x; r2.y <- <PlaceVertOnEdge return value>.uvw.y; r2.z <- <PlaceVertOnEdge return value>.uvw.z
-                  mov r3.xyz, r3.xyzx  // r3.x <- <PlaceVertOnEdge return value>.normal.x; r3.y <- <PlaceVertOnEdge return value>.normal.y; r3.z <- <PlaceVertOnEdge return value>.normal.z
-                
-                #line 133
-                  mov r4.xyzw, r4.xyzw  // r4.x <- output.posH.x; r4.y <- output.posH.y; r4.z <- output.posH.z
-                  mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
-                  mov r2.xyz, r2.xyzx  // r2.x <- output.uvw.x; r2.y <- output.uvw.y; r2.z <- output.uvw.z
-                  mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
-                  mov o0.xyz, r1.xyzx
-                  mov o1.xyzw, r4.xyzw
-                  mov o2.xyz, r2.xyzx
-                  mov o3.xyz, r3.xyzx
-                  emit_stream m0
-                  nop 
-                  mov r1.xyz, v[0][1].xyzx
-                  imul null, r0.w, l(5), v[0][3].x
-                  iadd r0.w, r0.z, r0.w
-                
-                #line 102
-                  mov r1.xyz, r1.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
-                  div r2.z, cb1[16].y, l(2.000000)  // r2.z <- step.y
-                  itof r2.y, l(0)  // r2.y <- step.z
-                  mov r2.x, cb1[16].y  // r2.x <- step.x
-                  imul null, r0.w, l(2), cb0[r0.w + 256].z
-                  mov r0.w, cb0[r0.w + 1536].x
-                  switch r0.w
-                    case l(0)
-                    add r1.xyz, r1.xyzx, r2.yzyy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(1)
-                    add r1.xyz, r1.xyzx, r2.zxyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(2)
-                    add r1.xyz, r1.xyzx, r2.xzyx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(3)
-                    add r1.xyz, r1.xyzx, r2.zyyz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(4)
-                    add r1.xyz, r1.xyzx, r2.yzxy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(5)
-                    add r1.xyz, r1.xyzx, r2.zxxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(6)
-                    add r1.xyz, r1.xyzx, r2.xzxx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                
-                #line 113
-                    case l(7)
-                    add r1.xyz, r1.xyzx, r2.zyxz
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(8)
-                    add r1.xyz, r1.xyzx, r2.yyzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(9)
-                    add r1.xyz, r1.xyzx, r2.yxzy
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(10)
-                    add r1.xyz, r1.xyzx, r2.xxzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    case l(11)
-                    add r1.xyz, r1.xyzx, r2.xyzx
-                    break   // r1.x <- input.posW.x; r1.y <- input.posW.y; r1.z <- input.posW.z
-                    default 
-                    break 
-                  endswitch 
-                  mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
-                  div r0.w, r1.x, l(160.000000)
-                  add r2.x, r0.w, l(0.500000)  // r2.x <- output.uvw.x
-                  div r0.w, r1.z, l(160.000000)
-                  add r2.y, r0.w, l(0.500000)  // r2.y <- output.uvw.y
-                  div r2.z, r1.y, l(160.000000)  // r2.z <- output.uvw.z
-                  nop 
-                  mov r2.xyz, r2.xyzx
-                
-                #line 76
-                  itof r3.w, l(0)  // r3.w <- step.w
-                  mov r3.xyz, l(0.030303,0.030303,0.030303,0)  // r3.x <- step.x; r3.y <- step.y; r3.z <- step.z
-                  add r4.xyz, r2.xyzx, r3.xwwx
-                  itof r0.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r4.xyzx, t0.yzwx, s0, r0.w
-                  mov r4.xyz, -r3.xwwx
-                  add r4.xyz, r2.xyzx, r4.xyzx
-                  itof r2.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r4.xyzx, t0.yzwx, s0, r2.w
-                  mov r2.w, -r2.w
-                  add r4.x, r0.w, r2.w  // r4.x <- gradient.x
-                  add r5.xyz, r2.xyzx, r3.wwyw
-                  itof r0.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r5.xyzx, t0.yzwx, s0, r0.w
-                  mov r5.xyz, -r3.wwyw
-                  add r5.xyz, r2.xyzx, r5.xyzx
-                  itof r2.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r5.xyzx, t0.yzwx, s0, r2.w
-                  mov r2.w, -r2.w
-                  add r4.y, r0.w, r2.w  // r4.y <- gradient.y
-                  add r5.xyz, r2.xyzx, r3.wzww
-                  itof r0.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r5.xyzx, t0.yzwx, s0, r0.w
-                  mov r3.xyz, -r3.wzww
-                  add r3.xyz, r2.xyzx, r3.xyzx
-                  itof r2.w, l(0)
-                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r3.xyzx, t0.yzwx, s0, r2.w
-                  mov r2.w, -r2.w
-                  add r4.z, r0.w, r2.w  // r4.z <- gradient.z
-                
-                #line 81
-                  mov r3.xyz, -r4.xyzx
-                  dp3 r0.w, r3.xyzx, r3.xyzx
-                  rsq r0.w, r0.w
-                  mul r3.xyz, r0.wwww, r3.xyzx  // r3.x <- <ComputeNormal return value>.x; r3.y <- <ComputeNormal return value>.y; r3.z <- <ComputeNormal return value>.z
-                
-                #line 121
+                #line 123
                   mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
                   mov r1.w, l(1.000000)
                   dp4 r4.x, r1.xyzw, cb1[8].xyzw  // r4.x <- output.posH.x
@@ -2295,11 +2125,95 @@ fxgroup
                   mov o2.xyz, r2.xyzx
                   mov o3.xyz, r3.xyzx
                   emit_stream m0
+                  nop 
+                  mov r1.xyz, v[0][1].xyzx
+                  imul null, r0.w, l(5), v[0][3].x
+                  iadd r0.w, r0.z, r0.w
+                  mov r0.w, cb0[r0.w + 256].z
+                
+                #line 93
+                  mov r1.w, l(0.500000)  // r1.w <- t
+                  itof r2.xyz, cb0[r0.w + 1536].xyzx
+                  itof r3.xyz, cb0[r0.w + 1548].xyzx
+                  mul r3.xyz, r1.wwww, r3.xyzx
+                  add r2.xyz, r2.xyzx, r3.xyzx  // r2.x <- posWithinCell.x; r2.y <- posWithinCell.y; r2.z <- posWithinCell.z
+                  mul r2.xyz, r2.xyzx, cb1[16].yyyy
+                  add r1.xyz, r1.xyzx, r2.xyzx  // r1.x <- v.x; r1.y <- v.y; r1.z <- v.z
+                
+                #line 121
+                  mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
+                  div r0.w, r1.x, l(160.000000)
+                  add r2.x, r0.w, l(0.500000)  // r2.x <- output.uvw.x
+                  div r0.w, r1.z, l(160.000000)
+                  add r2.y, r0.w, l(0.500000)  // r2.y <- output.uvw.y
+                  div r2.z, r1.y, l(160.000000)  // r2.z <- output.uvw.z
+                  nop 
+                  mov r2.xyz, r2.xyzx
+                
+                #line 76
+                  itof r3.w, l(0)
+                  mov r3.xyz, l(0.030303,0.030303,0.030303,0)  // r3.x <- step.x; r3.y <- step.y; r3.z <- step.z
+                  add r4.xyz, r2.xyzx, r3.xwwx
+                  itof r0.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r4.xyzx, t0.yzwx, s0, r0.w
+                  mov r4.xyz, -r3.xwwx
+                  add r4.xyz, r2.xyzx, r4.xyzx
+                  itof r2.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r4.xyzx, t0.yzwx, s0, r2.w
+                  mov r2.w, -r2.w
+                  add r4.x, r0.w, r2.w  // r4.x <- gradient.x
+                  add r5.xyz, r2.xyzx, r3.wwyw
+                  itof r0.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r5.xyzx, t0.yzwx, s0, r0.w
+                  mov r5.xyz, -r3.wwyw
+                  add r5.xyz, r2.xyzx, r5.xyzx
+                  itof r2.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r5.xyzx, t0.yzwx, s0, r2.w
+                  mov r2.w, -r2.w
+                  add r4.y, r0.w, r2.w  // r4.y <- gradient.y
+                  add r5.xyz, r2.xyzx, r3.wzww
+                  itof r0.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r0.w, r5.xyzx, t0.yzwx, s0, r0.w
+                  mov r3.xyz, -r3.wzww
+                  add r3.xyz, r2.xyzx, r3.xyzx
+                  itof r2.w, l(0)
+                  sample_l_indexable(texture3d)(float,float,float,float) r2.w, r3.xyzx, t0.yzwx, s0, r2.w
+                  mov r2.w, -r2.w
+                  add r4.z, r0.w, r2.w  // r4.z <- gradient.z
+                
+                #line 81
+                  mov r3.xyz, -r4.xyzx
+                  dp3 r0.w, r3.xyzx, r3.xyzx
+                  rsq r0.w, r0.w
+                  mul r3.xyz, r0.wwww, r3.xyzx  // r3.x <- <ComputeNormal return value>.x; r3.y <- <ComputeNormal return value>.y; r3.z <- <ComputeNormal return value>.z
+                
+                #line 123
+                  mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
+                  mov r1.w, l(1.000000)
+                  dp4 r4.x, r1.xyzw, cb1[8].xyzw  // r4.x <- output.posH.x
+                  dp4 r4.y, r1.xyzw, cb1[9].xyzw  // r4.y <- output.posH.y
+                  dp4 r4.z, r1.xyzw, cb1[10].xyzw  // r4.z <- output.posH.z
+                  dp4 r4.w, r1.xyzw, cb1[11].xyzw
+                  mov r4.xyzw, r4.xyzw  // r4.x <- <PlaceVertOnEdge return value>.posH.x; r4.y <- <PlaceVertOnEdge return value>.posH.y; r4.z <- <PlaceVertOnEdge return value>.posH.z
+                  mov r1.xyz, r1.xyzx  // r1.x <- <PlaceVertOnEdge return value>.posW.x; r1.y <- <PlaceVertOnEdge return value>.posW.y; r1.z <- <PlaceVertOnEdge return value>.posW.z
+                  mov r2.xyz, r2.xyzx  // r2.x <- <PlaceVertOnEdge return value>.uvw.x; r2.y <- <PlaceVertOnEdge return value>.uvw.y; r2.z <- <PlaceVertOnEdge return value>.uvw.z
+                  mov r3.xyz, r3.xyzx  // r3.x <- <PlaceVertOnEdge return value>.normal.x; r3.y <- <PlaceVertOnEdge return value>.normal.y; r3.z <- <PlaceVertOnEdge return value>.normal.z
+                
+                #line 137
+                  mov r4.xyzw, r4.xyzw  // r4.x <- output.posH.x; r4.y <- output.posH.y; r4.z <- output.posH.z
+                  mov r1.xyz, r1.xyzx  // r1.x <- output.posW.x; r1.y <- output.posW.y; r1.z <- output.posW.z
+                  mov r2.xyz, r2.xyzx  // r2.x <- output.uvw.x; r2.y <- output.uvw.y; r2.z <- output.uvw.z
+                  mov r3.xyz, r3.xyzx  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z
+                  mov o0.xyz, r1.xyzx
+                  mov o1.xyzw, r4.xyzw
+                  mov o2.xyz, r2.xyzx
+                  mov o3.xyz, r3.xyzx
+                  emit_stream m0
                   cut_stream m0
                   iadd r0.z, r0.z, l(1)
                 endloop 
                 ret 
-                // Approximately 341 instruction slots used
+                // Approximately 227 instruction slots used
                             
             };
             PixelShader = asm {
@@ -2390,7 +2304,7 @@ fxgroup
                 //   v3.x <- pin.normal.x; v3.y <- pin.normal.y; v3.z <- pin.normal.z; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 142 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 144 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r0.xyz, -v0.xyzx
                 add r0.xyz, r0.xyzx, cb0[12].xyzx  // r0.x <- toEye.x; r0.y <- toEye.y; r0.z <- toEye.z
                 dp3 r0.w, r0.xyzx, r0.xyzx
@@ -2398,12 +2312,12 @@ fxgroup
                 div r0.xyz, r0.xyzx, r0.wwww
                 itof r1.xyzw, l(1, 1, 1, 1)  // r1.x <- texColor.x; r1.y <- texColor.y; r1.z <- texColor.z; r1.w <- texColor.w
                 
-                #line 151
+                #line 153
                 mov r2.xyzw, l(0,0,0,0)  // r2.x <- ambient.x; r2.y <- ambient.y; r2.z <- ambient.z; r2.w <- ambient.w
                 mov r3.xyzw, l(0,0,0,0)  // r3.x <- diffuse.x; r3.y <- diffuse.y; r3.z <- diffuse.z; r3.w <- diffuse.w
                 mov r4.xyzw, l(0,0,0,0)  // r4.x <- spec.x; r4.y <- spec.y; r4.z <- spec.z; r4.w <- spec.w
                 
-                #line 160
+                #line 162
                 nop 
                 mov r5.xyzw, cb1[17].xyzw
                 mov r6.xyzw, cb1[18].xyzw
@@ -2448,7 +2362,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r7.xyzw, r8.xxxx, r7.xyzw, r14.xyzw
                 
-                #line 160 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 162 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r7.xyzw, r7.xyzw  // r7.x <- S.x; r7.y <- S.y; r7.z <- S.z; r7.w <- S.w
@@ -2456,7 +2370,7 @@ fxgroup
                 add r3.xyzw, r3.xyzw, r6.xyzw
                 add r4.xyzw, r4.xyzw, r7.xyzw
                 
-                #line 160
+                #line 162
                 nop 
                 mov r5.xyzw, cb1[17].xyzw  // r5.x <- mat.Ambient.x; r5.y <- mat.Ambient.y; r5.z <- mat.Ambient.z; r5.w <- mat.Ambient.w
                 mov r6.xyzw, cb1[18].xyzw  // r6.x <- mat.Diffuse.x; r6.y <- mat.Diffuse.y; r6.z <- mat.Diffuse.z; r6.w <- mat.Diffuse.w
@@ -2500,7 +2414,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r7.xyzw, r8.xxxx, r7.xyzw, r14.xyzw
                 
-                #line 160 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 162 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r7.xyzw, r7.xyzw  // r7.x <- S.x; r7.y <- S.y; r7.z <- S.z; r7.w <- S.w
@@ -2508,7 +2422,7 @@ fxgroup
                 add r3.xyzw, r3.xyzw, r6.xyzw
                 add r4.xyzw, r4.xyzw, r7.xyzw
                 
-                #line 160
+                #line 162
                 nop 
                 mov r5.xyzw, cb1[17].xyzw  // r5.x <- mat.Ambient.x; r5.y <- mat.Ambient.y; r5.z <- mat.Ambient.z; r5.w <- mat.Ambient.w
                 mov r6.xyzw, cb1[18].xyzw  // r6.x <- mat.Diffuse.x; r6.y <- mat.Diffuse.y; r6.z <- mat.Diffuse.z; r6.w <- mat.Diffuse.w
@@ -2552,7 +2466,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r0.xyzw, r8.xxxx, r0.xyzw, r14.xyzw
                 
-                #line 160 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 162 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r0.xyzw, r0.xyzw  // r0.x <- S.x; r0.y <- S.y; r0.z <- S.z; r0.w <- S.w
@@ -2560,17 +2474,13 @@ fxgroup
                 add r3.xyzw, r3.xyzw, r6.xyzw
                 add r0.xyzw, r0.xyzw, r4.xyzw  // r0.x <- spec.x; r0.y <- spec.y; r0.z <- spec.z; r0.w <- spec.w
                 
-                #line 168
+                #line 170
                 add r2.xyzw, r2.xyzw, r3.xyzw
                 mul r1.xyzw, r1.xyzw, r2.xyzw
                 add r0.xyzw, r0.xyzw, r1.xyzw  // r0.x <- litColor.x; r0.y <- litColor.y; r0.z <- litColor.z; r0.w <- litColor.w
-                
-                #line 171
-                itof r1.xyzw, l(1, 0, 0, 0)
-                add r0.xyzw, r0.xyzw, r1.xyzw
-                mul o0.xyzw, r0.xyzw, l(0.500000, 0.500000, 0.500000, 0.500000)
+                add o0.xyzw, r0.xyzw, l(0.090000, 0.090000, 0.090000, 0.090000)
                 ret 
-                // Approximately 131 instruction slots used
+                // Approximately 129 instruction slots used
                             
             };
         }
