@@ -406,7 +406,7 @@ void TerrainApp::DrawScene()
 	XMMATRIX world = XMLoadFloat4x4(&mTerrainWorld);
 	XMMATRIX worldInvTranspose = MathHelper::InverseTranspose(world);
 	XMMATRIX worldViewProj = world*view*proj;
-	XMFLOAT3 voxelSize = XMFLOAT3(160.0f / (voxelWidth-1), 160.0f / voxelDepth, 160.0f / (voxelHeight-1));
+	XMFLOAT3 voxelSize = XMFLOAT3(160.0f / (voxelWidth), 160.0f / (voxelDepth), 160.0f / (voxelHeight));//cracks
 
 	Effects::MarchingCubesFX->SetWorld(world);
 	Effects::MarchingCubesFX->SetWorldInvTranspose(worldInvTranspose);
@@ -786,7 +786,7 @@ void TerrainApp::InitDensitySRV()
 
 	FastNoise myNoise; // Create a FastNoise object
 	myNoise.SetSeed(24);
-	myNoise.SetFrequency(0.2f);
+	myNoise.SetFrequency(0.03f);
 	myNoise.SetNoiseType(FastNoise::SimplexFractal); // Set the desired noise type
 	float noiseScale = 1;
 	for (int y = 0; y < cornerHeight; y++)
@@ -843,7 +843,7 @@ void TerrainApp::BuildTerrainGeometryBuffers()
 
 	GeometryGenerator geoGen;
 
-	geoGen.CreateGrid(160.0f, 160.0f, voxelWidth, voxelDepth, grid);
+	geoGen.CreateGrid(160.0f, 160.0f, voxelWidth+1, voxelDepth+1, grid);//crack
 
 
 	mTerrainIndexCount = grid.Indices.size();
@@ -881,58 +881,6 @@ void TerrainApp::BuildTerrainGeometryBuffers()
 }
 void TerrainApp::DrawDensityFX(CXMMATRIX viewProj)
 {
-	/*Effects::TreeSpriteFX->SetDirLights(mDirLights);
-	Effects::TreeSpriteFX->SetEyePosW(mEyePosW);
-	Effects::TreeSpriteFX->SetFogColor(Colors::Silver);
-	Effects::TreeSpriteFX->SetFogStart(15.0f);
-	Effects::TreeSpriteFX->SetFogRange(175.0f);
-	Effects::TreeSpriteFX->SetViewProj(viewProj);
-	Effects::TreeSpriteFX->SetMaterial(mTreeMat);
-	Effects::TreeSpriteFX->SetTreeTextureMapArray(mTreeTextureMapArraySRV);*/
-
-	//md3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-	//md3dImmediateContext->IASetInputLayout(InputLayouts::TreePointSprite);
-	//UINT stride = sizeof(Vertex::TreePointSprite);
- //   UINT offset = 0; 
-
-	//ID3DX11EffectTechnique* treeTech;
-	//switch(mRenderOptions)
-	//{
-	//case RenderOptions::Lighting:
-	//	treeTech = Effects::TreeSpriteFX->Light3Tech;
-	//	break;
-	//case RenderOptions::Textures:
-	//	treeTech = Effects::TreeSpriteFX->Light3TexAlphaClipTech;
-	//	break;
-	//case RenderOptions::TexturesAndFog:
-	//	treeTech = Effects::TreeSpriteFX->Light3TexAlphaClipFogTech;
-	//	break;  
-	//}
-
-	//D3DX11_TECHNIQUE_DESC techDesc;
-	//treeTech->GetDesc( &techDesc );
-	//for(UINT p = 0; p < techDesc.Passes; ++p)
- //   {
-	//md3dImmediateContext->IASetVertexBuffers(0, 1, &mTreeSpritesVB, &stride, &offset);
-	//	float blendFactor[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-
-	//	if(mAlphaToCoverageOn)
-	//	{
-			//md3dImmediateContext->OMSetBlendState(RenderStates::AlphaToCoverageBS, blendFactor, 0xffffffff);
-	//	}
-	//	treeTech->GetPassByIndex(p)->Apply(0, md3dImmediateContext);
-	//	md3dImmediateContext->Draw(TreeCount, 0);
-	/*float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	md3dImmediateContext->OMSetBlendState(0, blendFactor, 0xffffffff);*/
-	//	md3dImmediateContext->OMSetBlendState(0, blendFactor, 0xffffffff);
-	//}
-
-
-	/*md3dImmediateContext->OMSetRenderTargets(1, &mDensityRTV, mDepthStencilView);
-	md3dImmediateContext->ClearRenderTargetView(mDensityRTV, reinterpret_cast<const float*>(&Colors::Silver));
-	md3dImmediateContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);*/
-
-
 	Effects::BuildDensityFX->SetNoiseTex(mDensitySRV);
 
 	//draw the 3d texture
@@ -944,7 +892,6 @@ void TerrainApp::DrawDensityFX(CXMMATRIX viewProj)
 	ID3DX11EffectTechnique * pTech = NULL;
 	Effects::BuildDensityFX->Test->GetPassByIndex(0)->Apply(0, md3dImmediateContext);
 	md3dImmediateContext->DrawInstanced(4, cornerHeight, 0, 0);
-
 
 }
 void TerrainApp::HandleImGui() {
