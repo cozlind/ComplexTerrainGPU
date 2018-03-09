@@ -1,19 +1,3 @@
-//***************************************************************************************
-// TreeBillboardDemo.cpp by Frank Luna (C) 2011 All Rights Reserved.
-//
-// Demonstrates the geometry shader, texture arrays, and alpha to coverage.
-//
-// Controls:
-//		Hold the left mouse button down and move the mouse to rotate.
-//      Hold the right mouse button down to zoom in and out.
-//
-//      Press '1' - Lighting only render mode.
-//      Press '2' - Texture render mode.
-//      Press '3' - Fog render mode.
-//      Press 'r' - Alpha-to-coverage on.
-//      Press 't' - Alpha-to-coverage off.
-//
-//***************************************************************************************
 
 #include "d3dApp.h"
 #include "d3dx11Effect.h"

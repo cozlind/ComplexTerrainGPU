@@ -1,8 +1,3 @@
-//=============================================================================
-// Basic.fx by Frank Luna (C) 2011 All Rights Reserved.
-//
-// Basic effect that currently supports transformations, lighting, and texturing.
-//=============================================================================
 
 #include "LightHelper.fx"
  

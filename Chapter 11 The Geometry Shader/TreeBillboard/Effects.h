@@ -1,10 +1,3 @@
-//***************************************************************************************
-// Effects.h by Frank Luna (C) 2011 All Rights Reserved.
-//
-// Defines lightweight effect wrappers to group an effect and its variables.
-// Also defines a static Effects class from which we can access all of our effects.
-//***************************************************************************************
-
 #ifndef EFFECTS_H
 #define EFFECTS_H
 

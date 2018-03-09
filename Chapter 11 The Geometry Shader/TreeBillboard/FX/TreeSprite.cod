@@ -81,7 +81,7 @@ fxgroup
                 //   o1.x <- <VS return value>.SizeW.x; o1.y <- <VS return value>.SizeW.y; 
                 //   o0.x <- <VS return value>.CenterW.x; o0.y <- <VS return value>.CenterW.y; o0.z <- <VS return value>.CenterW.z
                 //
-                #line 77 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 77 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, v0.xyzx  // r0.x <- vout.CenterW.x; r0.y <- vout.CenterW.y; r0.z <- vout.CenterW.z
                 mov r1.xy, v1.xyxx  // r1.x <- vout.SizeW.x; r1.y <- vout.SizeW.y
                 mov o0.xyz, r0.xyzx
@@ -202,7 +202,7 @@ fxgroup
                 //   v[0][1].x <- gin[0].SizeW.x; v[0][1].y <- gin[0].SizeW.y; 
                 //   x0 <- v
                 //
-                #line 95 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 95 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, l(0,1.000000,0,0)  // r0.x <- up.x; r0.y <- up.y; r0.z <- up.z
                 mov r1.xy, -v[0][0].xzxx
                 add r1.xz, r1.xxyx, cb0[12].xxzx  // r1.x <- look.x; r1.z <- look.z
@@ -405,7 +405,7 @@ fxgroup
                 //   v4.x <- pin.PrimID; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 134 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 134 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 dp3 r0.x, v2.xyzx, v2.xyzx
                 rsq r0.x, r0.x
                 mul r0.xyz, r0.xxxx, v2.xyzx  // r0.x <- pin.NormalW.x; r0.y <- pin.NormalW.y; r0.z <- pin.NormalW.z
@@ -441,7 +441,7 @@ fxgroup
                 mov r0.xyz, r0.xyzx
                 mov r1.xyz, r1.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -474,7 +474,7 @@ fxgroup
                 movc r7.xyz, r1.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r1.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -494,7 +494,7 @@ fxgroup
                 mov r11.xyz, cb0[6].xyzx
                 mov r12.xyz, cb0[7].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -527,7 +527,7 @@ fxgroup
                 movc r7.xyz, r1.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r1.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -547,7 +547,7 @@ fxgroup
                 mov r11.xyz, cb0[10].xyzx
                 mov r12.xyz, cb0[11].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -580,7 +580,7 @@ fxgroup
                 movc r0.xyz, r1.wwww, r0.yzwy, r13.xyzx  // r0.x <- diffuse.x; r0.y <- diffuse.y; r0.z <- diffuse.z
                 movc r1.xyz, r1.wwww, r1.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r0.xyz, r0.xyzx  // r0.x <- D.x; r0.y <- D.y; r0.z <- D.z
                 mov r1.xyz, r1.xyzx  // r1.x <- S.x; r1.y <- S.y; r1.z <- S.z
@@ -646,7 +646,7 @@ fxgroup
                 //   o1.x <- <VS return value>.SizeW.x; o1.y <- <VS return value>.SizeW.y; 
                 //   o0.x <- <VS return value>.CenterW.x; o0.y <- <VS return value>.CenterW.y; o0.z <- <VS return value>.CenterW.z
                 //
-                #line 77 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 77 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, v0.xyzx  // r0.x <- vout.CenterW.x; r0.y <- vout.CenterW.y; r0.z <- vout.CenterW.z
                 mov r1.xy, v1.xyxx  // r1.x <- vout.SizeW.x; r1.y <- vout.SizeW.y
                 mov o0.xyz, r0.xyzx
@@ -767,7 +767,7 @@ fxgroup
                 //   v[0][1].x <- gin[0].SizeW.x; v[0][1].y <- gin[0].SizeW.y; 
                 //   x0 <- v
                 //
-                #line 95 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 95 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, l(0,1.000000,0,0)  // r0.x <- up.x; r0.y <- up.y; r0.z <- up.z
                 mov r1.xy, -v[0][0].xzxx
                 add r1.xz, r1.xxyx, cb0[12].xxzx  // r1.x <- look.x; r1.z <- look.z
@@ -976,7 +976,7 @@ fxgroup
                 //   v4.x <- pin.PrimID; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 134 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 134 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 dp3 r0.x, v2.xyzx, v2.xyzx
                 rsq r0.x, r0.x
                 mul r0.xyz, r0.xxxx, v2.xyzx  // r0.x <- pin.NormalW.x; r0.y <- pin.NormalW.y; r0.z <- pin.NormalW.z
@@ -1023,7 +1023,7 @@ fxgroup
                 mov r0.xyz, r0.xyzx
                 mov r1.xyz, r1.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1056,7 +1056,7 @@ fxgroup
                 movc r7.xyz, r1.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r1.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -1076,7 +1076,7 @@ fxgroup
                 mov r11.xyz, cb0[6].xyzx
                 mov r12.xyz, cb0[7].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1109,7 +1109,7 @@ fxgroup
                 movc r7.xyz, r1.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r1.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -1129,7 +1129,7 @@ fxgroup
                 mov r11.xyz, cb0[10].xyzx
                 mov r12.xyz, cb0[11].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1162,7 +1162,7 @@ fxgroup
                 movc r0.xyz, r1.wwww, r0.yzwy, r13.xyzx  // r0.x <- diffuse.x; r0.y <- diffuse.y; r0.z <- diffuse.z
                 movc r1.xyz, r1.wwww, r1.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r0.xyz, r0.xyzx  // r0.x <- D.x; r0.y <- D.y; r0.z <- D.z
                 mov r1.xyz, r1.xyzx  // r1.x <- S.x; r1.y <- S.y; r1.z <- S.z
@@ -1228,7 +1228,7 @@ fxgroup
                 //   o1.x <- <VS return value>.SizeW.x; o1.y <- <VS return value>.SizeW.y; 
                 //   o0.x <- <VS return value>.CenterW.x; o0.y <- <VS return value>.CenterW.y; o0.z <- <VS return value>.CenterW.z
                 //
-                #line 77 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 77 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, v0.xyzx  // r0.x <- vout.CenterW.x; r0.y <- vout.CenterW.y; r0.z <- vout.CenterW.z
                 mov r1.xy, v1.xyxx  // r1.x <- vout.SizeW.x; r1.y <- vout.SizeW.y
                 mov o0.xyz, r0.xyzx
@@ -1349,7 +1349,7 @@ fxgroup
                 //   v[0][1].x <- gin[0].SizeW.x; v[0][1].y <- gin[0].SizeW.y; 
                 //   x0 <- v
                 //
-                #line 95 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 95 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r0.xyz, l(0,1.000000,0,0)  // r0.x <- up.x; r0.y <- up.y; r0.z <- up.z
                 mov r1.xy, -v[0][0].xzxx
                 add r1.xz, r1.xxyx, cb0[12].xxzx  // r1.x <- look.x; r1.z <- look.z
@@ -1558,7 +1558,7 @@ fxgroup
                 //   v4.x <- pin.PrimID; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 134 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 134 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 dp3 r0.x, v2.xyzx, v2.xyzx
                 rsq r0.x, r0.x
                 mul r0.xyz, r0.xxxx, v2.xyzx  // r0.x <- pin.NormalW.x; r0.y <- pin.NormalW.y; r0.z <- pin.NormalW.z
@@ -1605,7 +1605,7 @@ fxgroup
                 mov r0.xyz, r0.xyzx
                 mov r1.xyz, r1.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1638,7 +1638,7 @@ fxgroup
                 movc r7.xyz, r3.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r3.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -1658,7 +1658,7 @@ fxgroup
                 mov r11.xyz, cb0[6].xyzx
                 mov r12.xyz, cb0[7].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1691,7 +1691,7 @@ fxgroup
                 movc r7.xyz, r3.wwww, r7.xyzx, r13.xyzx
                 movc r8.xyz, r3.wwww, r8.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r7.xyz, r7.xyzx  // r7.x <- D.x; r7.y <- D.y; r7.z <- D.z
                 mov r8.xyz, r8.xyzx  // r8.x <- S.x; r8.y <- S.y; r8.z <- S.z
@@ -1711,7 +1711,7 @@ fxgroup
                 mov r11.xyz, cb0[10].xyzx
                 mov r12.xyz, cb0[11].xyzx  // r12.x <- L.Direction.x; r12.y <- L.Direction.y; r12.z <- L.Direction.z
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyz, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z
                 mov r14.xyz, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z
                 
@@ -1744,7 +1744,7 @@ fxgroup
                 movc r1.xyz, r3.wwww, r1.xyzx, r13.xyzx
                 movc r0.xyz, r3.wwww, r0.xyzx, r14.xyzx
                 
-                #line 179 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
+                #line 179 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\TreeSprite.fx"
                 mov r6.xyz, r6.xyzx  // r6.x <- A.x; r6.y <- A.y; r6.z <- A.z
                 mov r1.xyz, r1.xyzx  // r1.x <- D.x; r1.y <- D.y; r1.z <- D.z
                 mov r0.xyz, r0.xyzx  // r0.x <- S.x; r0.y <- S.y; r0.z <- S.z

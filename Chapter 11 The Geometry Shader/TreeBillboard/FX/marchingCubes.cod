@@ -139,7 +139,7 @@ fxgroup
                 //   o1.x <- <VS return value>.uvw.x; o1.y <- <VS return value>.uvw.y; o1.z <- <VS return value>.uvw.z; 
                 //   o0.x <- <VS return value>.posW.x; o0.y <- <VS return value>.posW.y; o0.z <- <VS return value>.posW.z
                 //
-                #line 54 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 54 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r0.xyz, v0.xyzx
                 mov r0.w, l(1.000000)
                 dp4 r1.x, r0.xyzw, cb0[0].xyzw  // r1.x <- vout.posW.x
@@ -1944,7 +1944,7 @@ fxgroup
                 //   v[0][3].x <- input[0].f4567.x; v[0][3].y <- input[0].f4567.y; v[0][3].z <- input[0].f4567.z; v[0][3].w <- input[0].f4567.w; 
                 //   v[0][4].x <- input[0].mcCase
                 //
-                #line 109 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 109 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r0.x, v[0][4].x
                 mov r0.x, cb0[r0.x + 0].x  // r0.x <- num_polys
                 mov r0.y, l(0)  // r0.y <- p
@@ -2392,7 +2392,7 @@ fxgroup
                 //   v3.x <- pin.normal.x; v3.y <- pin.normal.y; v3.z <- pin.normal.z; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 127 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 127 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r0.xyz, -v0.xyzx
                 add r0.xyz, r0.xyzx, cb0[12].xyzx  // r0.x <- toEye.x; r0.y <- toEye.y; r0.z <- toEye.z
                 dp3 r0.w, r0.xyzx, r0.xyzx
@@ -2417,7 +2417,7 @@ fxgroup
                 mov r12.xyz, v3.xyzx
                 mov r0.xyz, r0.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyzw, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z; r13.w <- diffuse.w
                 mov r14.xyzw, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z; r14.w <- spec.w
                 
@@ -2450,7 +2450,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r7.xyzw, r8.xxxx, r7.xyzw, r14.xyzw
                 
-                #line 145 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 145 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r7.xyzw, r7.xyzw  // r7.x <- S.x; r7.y <- S.y; r7.z <- S.z; r7.w <- S.w
@@ -2469,7 +2469,7 @@ fxgroup
                 mov r11.xyz, cb0[7].xyzx  // r11.x <- L.Direction.x; r11.y <- L.Direction.y; r11.z <- L.Direction.z
                 mov r12.xyz, v3.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyzw, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z; r13.w <- diffuse.w
                 mov r14.xyzw, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z; r14.w <- spec.w
                 
@@ -2502,7 +2502,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r7.xyzw, r8.xxxx, r7.xyzw, r14.xyzw
                 
-                #line 145 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 145 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r7.xyzw, r7.xyzw  // r7.x <- S.x; r7.y <- S.y; r7.z <- S.z; r7.w <- S.w
@@ -2521,7 +2521,7 @@ fxgroup
                 mov r11.xyz, cb0[11].xyzx  // r11.x <- L.Direction.x; r11.y <- L.Direction.y; r11.z <- L.Direction.z
                 mov r12.xyz, v3.xyzx
                 
-                #line 66 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
+                #line 66 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\LightHelper.fx"
                 mov r13.xyzw, l(0,0,0,0)  // r13.x <- diffuse.x; r13.y <- diffuse.y; r13.z <- diffuse.z; r13.w <- diffuse.w
                 mov r14.xyzw, l(0,0,0,0)  // r14.x <- spec.x; r14.y <- spec.y; r14.z <- spec.z; r14.w <- spec.w
                 
@@ -2554,7 +2554,7 @@ fxgroup
                 movc r6.xyzw, r8.xxxx, r6.xyzw, r13.xyzw
                 movc r0.xyzw, r8.xxxx, r0.xyzw, r14.xyzw
                 
-                #line 145 "E:\Desktop\ComplexTerrainTest\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
+                #line 145 "E:\Projects\Visual Studio Projects\GPUMarchingCubes\Chapter 11 The Geometry Shader\TreeBillboard\FX\marchingCubes.fx"
                 mov r5.xyzw, r5.xyzw  // r5.x <- A.x; r5.y <- A.y; r5.z <- A.z; r5.w <- A.w
                 mov r6.xyzw, r6.xyzw  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z; r6.w <- D.w
                 mov r0.xyzw, r0.xyzw  // r0.x <- S.x; r0.y <- S.y; r0.z <- S.z; r0.w <- S.w

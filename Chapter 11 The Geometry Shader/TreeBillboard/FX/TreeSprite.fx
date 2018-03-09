@@ -1,9 +1,4 @@
 //***************************************************************************************
-// TreeSprite.fx by Frank Luna (C) 2011 All Rights Reserved.
-//
-// Uses the geometry shader to expand a point sprite into a y-axis aligned 
-// billboard that faces the camera.
-//***************************************************************************************
 
 #include "LightHelper.fx"
  
